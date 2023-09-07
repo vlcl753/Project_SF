@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register );
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
@@ -54,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                              account.setIdToken(firebaseUser.getUid());
                              account.setEmailId(firebaseUser.getEmail());
                              account.setPassword(strPwd);
+
                              mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
                              Toast.makeText(RegisterActivity.this, "회원가입에 성공했습니다", Toast.LENGTH_SHORT).show();
                          } else {
