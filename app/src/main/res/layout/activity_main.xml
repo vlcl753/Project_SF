@@ -10,7 +10,7 @@
     <!-- 최상단에 고정된 TextView -->
     <!-- -->
 
-    <!-- 스크롤뷰 -->
+
     <TextView
         android:id="@+id/appName"
         android:layout_width="199dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
-
+    <!-- 스크롤뷰 -->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
@@ -78,12 +78,16 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/test2" />
             </androidx.cardview.widget.CardView>
-            <!--배너 순서 표기 들어갈 자-->
+            <!--배너 순서 표기 들어갈 자리-->
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="배너 순서 표기" />
             <!--게시물 radius설정 틀-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -102,10 +106,11 @@
                         android:id="@+id/contentsTopText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_marginTop="15dp"
+
                         android:gravity="center"
                         android:text="TODAY'S SELFIT"
-                        android:textSize="26dp"
+                        android:textSize="30dp"
                         android:textStyle="bold" />
                     <!--게시물 수평 정렬-->
                     <LinearLayout

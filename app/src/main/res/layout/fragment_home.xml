@@ -94,7 +94,7 @@
                 <!-- 게시물 레이아웃-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="619dp"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -164,7 +164,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="237dp"
+                        android:layout_height="289dp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
@@ -220,6 +220,7 @@
 
             </androidx.cardview.widget.CardView>
 
+
             <!-- 더 많은 스크롤 가능한 뷰를 추가할 수 있습니다 -->
 
         </LinearLayout>
@@ -229,27 +230,25 @@
 
     <!--Bottom_navigation_Bar-->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="MainActivity">
+
         <FrameLayout
+            android:id="@+id/containers"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/containers">
-        </FrameLayout>
+            android:layout_weight="1"></FrameLayout>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigationview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:labelVisibilityMode="labeled"
             app:itemBackground="@color/white"
-            app:menu="@menu/bottom_menu"
-            />
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
