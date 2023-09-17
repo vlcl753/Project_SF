@@ -13,48 +13,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ProfileActivity"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-62dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+
+        <!-- 최상단 SELFIT 문구 -->
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:id="@+id/contentsTopText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="@string/top_navigation_bar"
+            android:textSize="26dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 프로필 사진 -->
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/sjg__"
+            android:clipToOutline="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentsTopText"
+
+            />
+
+        <!-- 프로필 사진 밑 이름 -->
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            android:id="@+id/textview_id"
+            android:layout_width="87dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="7dp"
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="146dp"
-            android:layout_height="229dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="150dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:lineSpacingExtra="5.4sp"
+
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textFontWeight="700"
+            android:translationY="-2.7sp"
+            app:autoSizeTextType="none"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            app:layout_constraintTop_toBottomOf="@+id/view"
+
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
