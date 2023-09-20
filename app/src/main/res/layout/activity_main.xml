@@ -320,8 +320,7 @@
             android:id="@+id/containers"
             android:layout_width="match_parent"
             android:layout_height="645dp"
-            android:layout_weight="1"
-            android:background=""/>
+            android:layout_weight="1" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigationview"
         android:layout_width="match_parent"
