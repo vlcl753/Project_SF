@@ -666,7 +666,7 @@
 
 
 
-<!--Bottom_navigation_Bar-->
+    <!--Bottom_navigation_Bar-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -677,21 +677,17 @@
             android:id="@+id/containers"
             android:layout_width="match_parent"
             android:layout_height="645dp"
-<<<<<<< HEAD
-            android:layout_weight="1" />
-=======
             android:layout_weight="1"
             />
->>>>>>> 84efa00334323b366d39333974db0b10d1df30f1
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigationview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:labelVisibilityMode="labeled"
-        app:itemBackground="@color/white"
-        android:background="@color/white"
-        app:menu="@menu/bottom_menu"
-        />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigationview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:labelVisibilityMode="labeled"
+            app:itemBackground="@color/white"
+            android:background="@color/white"
+            app:menu="@menu/bottom_menu"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
