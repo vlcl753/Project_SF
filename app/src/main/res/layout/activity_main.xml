@@ -28,15 +28,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:id="@+id/option1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/search"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/appName"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        />
 
     <!-- 스크롤뷰 -->
     <ScrollView
@@ -99,7 +99,7 @@
                 <!-- 게시물 레이아웃-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="619dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -116,11 +116,12 @@
                     <!--게시물 수평 정렬-->
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
                         <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
+                        <!--*******************************-->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -128,32 +129,129 @@
                             android:gravity="center_vertical"
                             android:orientation="vertical">
                             <!--게시물 이미지!-->
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="20dp"
 
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="0dp">
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                                <ImageView
-                                    android:id="@+id/contents1"
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="wrap_content"
-                                    android:layout_height="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginRight="20dp"
 
-                                    android:background="@color/cardview_dark_background"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/test1"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
 
-                                    />
-                            </androidx.cardview.widget.CardView>
+                                    <ImageView
+                                        android:id="@+id/contents1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="200dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom|left"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:cardCornerRadius="20dp"
+                                            app:cardElevation="0dp"
+                                            app:strokeColor="@color/white"
+                                            app:strokeWidth="3dp">
+                                            <!--프로필 -->
+                                            <ImageView
+                                                android:id="@+id/profile1"
+                                                android:layout_width="35dp"
+                                                android:layout_height="35dp"
+                                                android:background="@color/cardview_dark_background"
+                                                android:scaleType="centerCrop"
+                                                android:src="@drawable/test1" />
+                                        </com.google.android.material.card.MaterialCardView>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical|center_horizontal"
+                                            android:layout_marginLeft="5dp"
+                                            android:text="빵빵이"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </FrameLayout>
 
                             <!--프로필 및 제목-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="8dp"
+                                android:text="오늘의 룩입니다"
+                                android:textStyle="bold" />
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
 
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/eye" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/heart" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/comments" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+                            </LinearLayout>
                         </LinearLayout>
+                        <!--*************************-->
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -161,66 +259,268 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="20dp"
+                            <!--게시물 이미지!-->
 
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="0dp">
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <ImageView
-                                android:id="@+id/contents2"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginRight="20dp"
+
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/contents2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="200dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom|left"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:cardCornerRadius="20dp"
+                                            app:cardElevation="0dp"
+                                            app:strokeColor="@color/white"
+                                            app:strokeWidth="3dp">
+                                            <!--프로필 -->
+                                            <ImageView
+                                                android:id="@+id/profile2"
+                                                android:layout_width="35dp"
+                                                android:layout_height="35dp"
+                                                android:background="@color/cardview_dark_background"
+                                                android:scaleType="centerCrop"
+                                                android:src="@drawable/test1" />
+                                        </com.google.android.material.card.MaterialCardView>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical|center_horizontal"
+                                            android:layout_marginLeft="5dp"
+                                            android:text="빵빵이"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </FrameLayout>
+
+                            <!--프로필 및 제목-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="8dp"
+                                android:text="오늘의 룩입니다"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="200dp"
+                                android:layout_height="wrap_content"
 
-                                android:background="@color/cardview_dark_background"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/test1"
+                                android:gravity="center_horizontal">
 
-                                />
-                        </androidx.cardview.widget.CardView>
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/eye" />
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
 
-                    </LinearLayout>
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/heart" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/comments" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+                            </LinearLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="237dp"
+                        android:layout_height="600dp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
+                        <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
+                        <!--*******************************-->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="20dp"
+                            <!--게시물 이미지!-->
 
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="0dp">
-                            <!--게시물 목록!-->
-                            <ImageView
-                                android:id="@+id/contents3"
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginRight="20dp"
+
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+                                    <ImageView
+                                        android:id="@+id/contents3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="200dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom|left"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:cardCornerRadius="20dp"
+                                            app:cardElevation="0dp"
+                                            app:strokeColor="@color/white"
+                                            app:strokeWidth="3dp">
+                                            <!--프로필 -->
+                                            <ImageView
+                                                android:id="@+id/profile3"
+                                                android:layout_width="35dp"
+                                                android:layout_height="35dp"
+                                                android:background="@color/cardview_dark_background"
+                                                android:scaleType="centerCrop"
+                                                android:src="@drawable/test1" />
+                                        </com.google.android.material.card.MaterialCardView>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical|center_horizontal"
+                                            android:layout_marginLeft="5dp"
+                                            android:text="빵빵이"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </FrameLayout>
+
+                            <!--프로필 및 제목-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="8dp"
+                                android:text="오늘의 룩입니다"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="200dp"
+                                android:layout_height="wrap_content"
 
-                                android:background="@color/cardview_dark_background"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/test1"
+                                android:gravity="center_horizontal">
 
-                                />
-                        </androidx.cardview.widget.CardView>
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/eye" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/heart" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/comments" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+                            </LinearLayout>
                         </LinearLayout>
+                        <!--*************************-->
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -228,30 +528,132 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="20dp"
+                            <!--게시물 이미지!-->
 
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="0dp">
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <ImageView
-                                android:id="@+id/contents4"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginRight="20dp"
+
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/contents4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="200dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom|left"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:cardCornerRadius="20dp"
+                                            app:cardElevation="0dp"
+                                            app:strokeColor="@color/white"
+                                            app:strokeWidth="3dp">
+                                            <!--프로필 -->
+                                            <ImageView
+                                                android:id="@+id/profile4"
+                                                android:layout_width="35dp"
+                                                android:layout_height="35dp"
+                                                android:background="@color/cardview_dark_background"
+                                                android:scaleType="centerCrop"
+                                                android:src="@drawable/test1" />
+                                        </com.google.android.material.card.MaterialCardView>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical|center_horizontal"
+                                            android:layout_marginLeft="5dp"
+                                            android:text="빵빵이"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </FrameLayout>
+
+                            <!--프로필 및 제목-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="8dp"
+                                android:text="오늘의 룩입니다"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="200dp"
+                                android:layout_height="wrap_content"
 
-                                android:background="@color/cardview_dark_background"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/test1"
+                                android:gravity="center_horizontal">
 
-                                />
-                        </androidx.cardview.widget.CardView>
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/eye" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/heart" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:src="@drawable/comments" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="110"
+                                    android:textSize="30px" />
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
+
 
                 </LinearLayout>
 
