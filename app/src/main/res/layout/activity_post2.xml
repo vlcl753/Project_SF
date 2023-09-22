@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Post2Activity">
+
+    <!-- 하단네비게이션바 -->
+
+    <View
+        android:id="@+id/navigationbar"
+        android:layout_width="411dp"
+        android:layout_height="60dp"
+        android:background="@drawable/navigationbar"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="671dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- 홈버튼 -->
+
+    <View
+        android:id="@+id/homebtn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/homebtn"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="690dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- 챗버튼 -->
+
+    <View
+        android:id="@+id/chatbtn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/chatbtn"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="690dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- 추가 버튼 -->
+    <View
+        android:id="@+id/addbtn"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/addbtn"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="680dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- 알림 버튼 -->
+    <View
+        android:id="@+id/notibtbn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/notibtn"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="260dp"
+        tools:layout_editor_absoluteY="690dp"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/userbtn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/userbtn"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="352dp"
+        tools:layout_editor_absoluteY="689dp"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
