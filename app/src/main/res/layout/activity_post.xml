@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostActivity">
+
+    <View
+        android:id="@+id/roundrect"
+        android:layout_width="375dp"
+        android:layout_height="527dp"
+        android:clipToOutline="true"
+        android:background=
+            "@drawable/roundrect"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        />
+
+    <!-- 상단 SELFIT -->
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/top_navigation_bar"
+        android:textColor="#B2B6C0"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- 하단 네비게이션 -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="MainActivity">
+
+        <FrameLayout
+            android:id="@+id/containers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- 프로필 사진 -->
+            <ImageView
+                android:id="@+id/myImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="155dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ProfilePic" />
+            <!-- 사용자 이름 -->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="182dp"
+                android:layout_marginTop="172dp"
+                android:textStyle="bold"
+                android:text="Richard" />
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigationview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/white"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
