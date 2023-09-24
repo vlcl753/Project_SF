@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile_EditActivity"
+    android:background="#FFFFFF"
+    >
+
+    <!-- 최상단에 고정된 TextView -->
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="프로필 편집"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 최상단에 고정된 뒤로가기 ImageView-->
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="17dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toStartOf="@+id/appName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_img" />
+
+    <!-- 최하단 확인,취소 버튼 -->
+
+    <Button
+        android:id="@+id/profile_edit_yes"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="200dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="확인"
+        android:onClick="yes_click"
+        />
+
+    <Button
+        android:id="@+id/profile_edit_no"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginBottom="30dp"
+        android:text="취소"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appName">
+
+
+        <!--프로필 사진 테두리 컨테이너-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="30dp">
+
+            <!--프로필 이미지-->
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sjg__"/>
+        </androidx.cardview.widget.CardView>
+
+        <!--프로필 밑 사진 변경 텍스트 -->
+        <TextView
+            android:id="@+id/profile_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:text="프로필 사진 변경"
+            android:textColor="#57B1FF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <!-- 프로필 변경란 카드뷰 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="닉네임"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp" />
+
+                    <EditText
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:inputType="textPersonName"
+                        android:text="20학번 새내기"
+                        android:gravity="center" />
+
+            </LinearLayout>
+
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

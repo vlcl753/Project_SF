@@ -6,16 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class ProfileActivity extends AppCompatActivity {
+public class Profile_EditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_edit);
     }
 
-    public void img_setting_click(View v){
-        Intent intent = new Intent(ProfileActivity.this, Profile_EditActivity.class);
-        startActivity(intent);
+    public void yes_click(View v){
+        finish();
     }
 }

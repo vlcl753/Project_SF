@@ -39,6 +39,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="166dp"
+        android:layout_height="74dp"
+        android:text="TextView"
+        android:textColor="#C5C5C5"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="210dp" />
+
 
     <!-- 최하단 메뉴바 -->
 </androidx.constraintlayout.widget.ConstraintLayout>
