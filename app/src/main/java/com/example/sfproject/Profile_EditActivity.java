@@ -17,4 +17,8 @@ public class Profile_EditActivity extends AppCompatActivity {
     public void yes_click(View v){
         finish();
     }
+
+    public void no_click(View v){
+        finish();
+    }
 }

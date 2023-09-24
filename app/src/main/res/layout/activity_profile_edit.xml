@@ -60,7 +60,9 @@
         android:text="취소"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:onClick="no_click"
+        />
 
     <LinearLayout
         android:orientation="vertical"
