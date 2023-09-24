@@ -107,7 +107,6 @@
                         android:layout_width="140dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="45dp"
-                        android:layout_marginTop="10dp"
                         android:text="message"
                         android:textSize="20dp" />
 
@@ -194,6 +193,133 @@
                         android:orientation="horizontal">
                         <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
                         <!--*******************************-->
+                        <!-- 1번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+
+                        </LinearLayout>
+                        <!--*************************-->
+
+                        <!-- 2번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
+
+
+                        <!-- 3번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+                        <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
+                        <!--*******************************-->
+                        <!-- 4번 게시물 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -216,7 +342,7 @@
                                     app:cardElevation="0dp">
 
                                     <ImageView
-                                        android:id="@+id/contents1"
+                                        android:id="@+id/profile_post4"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -234,11 +360,7 @@
                         </LinearLayout>
                         <!--*************************-->
 
-
-
-
-
-
+                        <!-- 5번 게시물 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -262,7 +384,7 @@
                                     app:cardElevation="0dp">
 
                                     <ImageView
-                                        android:id="@+id/contents2"
+                                        android:id="@+id/profile_post5"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -276,6 +398,7 @@
                             </FrameLayout>
                         </LinearLayout>
 
+                        <!-- 6번 게시물 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -299,7 +422,7 @@
                                     app:cardElevation="0dp">
 
                                     <ImageView
-                                        android:id="@+id/contents3"
+                                        android:id="@+id/profile_post6"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -312,42 +435,174 @@
                                 </androidx.cardview.widget.CardView>
                             </FrameLayout>
                         </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+                        <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
+                        <!--*******************************-->
+
+                        <!-- 7번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post7"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+                        <!--*************************-->
+
+                        <!-- 8번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post8"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                        <!-- 9번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post9"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
+
+                                        />
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="600dp"
+                        android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
                         <!--게시물 수직 정렬(이미지와 제목 수직 정렬)-->
                         <!--*******************************-->
+
+
+                        <!-- 10번 게시물 -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginTop="15dp"
+                            >
                             <!--게시물 이미지!-->
 
                             <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
 
                                 <androidx.cardview.widget.CardView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginTop="16dp"
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
                                     android:layout_marginRight="20dp"
-
                                     app:cardCornerRadius="20dp"
                                     app:cardElevation="0dp">
 
                                     <ImageView
-                                        android:id="@+id/contents4"
+                                        android:id="@+id/profile_post10"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="200dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
@@ -355,130 +610,41 @@
 
                                         />
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom|left"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginBottom="10dp"
-                                        android:gravity="center_horizontal"
-                                        android:orientation="horizontal">
-
-                                        <com.google.android.material.card.MaterialCardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="0dp"
-                                            app:strokeColor="@color/white"
-                                            app:strokeWidth="3dp">
-                                            <!--프로필 -->
-                                            <ImageView
-                                                android:id="@+id/profile3"
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:background="@color/cardview_dark_background"
-                                                android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
-                                        </com.google.android.material.card.MaterialCardView>
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_vertical|center_horizontal"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="빵빵이"
-                                            android:textColor="@color/white"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
-
                                 </androidx.cardview.widget.CardView>
 
 
                             </FrameLayout>
 
-                            <!--프로필 및 제목-->
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:gravity="center_horizontal">
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/eye" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/heart" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/comments" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-                            </LinearLayout>
                         </LinearLayout>
                         <!--*************************-->
 
+                        <!-- 11번 게시물 -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
                             <!--게시물 이미지!-->
 
                             <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
 
                                 <androidx.cardview.widget.CardView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginTop="16dp"
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
                                     android:layout_marginRight="20dp"
-
                                     app:cardCornerRadius="20dp"
                                     app:cardElevation="0dp">
 
                                     <ImageView
-                                        android:id="@+id/contents5"
+                                        android:id="@+id/profile_post11"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="200dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
@@ -486,105 +652,56 @@
 
                                         />
 
-                                    <LinearLayout
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                        <!-- 12번 게시물 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            >
+                            <!--게시물 이미지!-->
+
+                            <FrameLayout
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                >
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="105dp"
+                                    android:layout_height="105dp"
+                                    android:layout_marginRight="20dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/profile_post12"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom|left"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginBottom="10dp"
-                                        android:gravity="center_horizontal"
-                                        android:orientation="horizontal">
+                                        android:layout_gravity="center"
+                                        android:background="@color/cardview_dark_background"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/test1"
 
-                                        <com.google.android.material.card.MaterialCardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="0dp"
-                                            app:strokeColor="@color/white"
-                                            app:strokeWidth="3dp">
-                                            <!--프로필 -->
-                                            <ImageView
-                                                android:id="@+id/profile4"
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:background="@color/cardview_dark_background"
-                                                android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
-                                        </com.google.android.material.card.MaterialCardView>
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_vertical|center_horizontal"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="빵빵이"
-                                            android:textColor="@color/white"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
+                                        />
 
                                 </androidx.cardview.widget.CardView>
-
-
                             </FrameLayout>
-
-                            <!--프로필 및 제목-->
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:gravity="center_horizontal">
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/eye" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/heart" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-
-                                <ImageView
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:src="@drawable/comments" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:text="110"
-                                    android:textSize="30px" />
-                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
 
+
+                    <!-- 스크롤뷰 최하단 여백 -->
+                    <FrameLayout
+                        android:id="@+id/containers_scr"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp" />
 
                 </LinearLayout>
 
