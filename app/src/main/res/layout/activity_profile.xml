@@ -38,6 +38,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_img" />
 
+    <ImageView
+        android:id="@+id/img_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="22dp"
+        android:onClick="img_setting_click"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/appName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings"
+        />
+
+
     <!-- 스크롤뷰 -->
     <ScrollView
         android:id="@+id/scrollView2"
@@ -715,6 +730,7 @@
 
     <!--Bottom_navigation_Bar-->
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
