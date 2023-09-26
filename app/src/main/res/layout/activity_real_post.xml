@@ -13,7 +13,7 @@
         android:id="@+id/roundrect"
         android:layout_width="410dp"
         android:layout_height="514dp"
-        android:background="@drawable/roundRect"
+        android:background="@drawable/rectround"
         android:clipToOutline="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
         android:id="@+id/some_id"
         android:layout_width="350dp"
         android:layout_height="42dp"
-        android:background="@drawable/chatBar"
+        android:background="@drawable/chatbar"
         android:clipToOutline="true"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="44dp"
@@ -103,10 +103,10 @@
         tools:ignore="MissingConstraints" />
 
     <View
-        android:id="@+id/RachardProfile"
+        android:id="@+id/chatbarbackground"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="200dp"
         android:background="@color/black"
         android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
