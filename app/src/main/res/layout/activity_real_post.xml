@@ -11,8 +11,8 @@
     <!-- 둥근 네모 -->
     <View
         android:id="@+id/roundrect"
-        android:layout_width="410dp"
-        android:layout_height="514dp"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:background="@drawable/rectround"
         android:clipToOutline="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,8 +26,8 @@
     <!-- 상단 SELFIT Logo -->
     <TextView
         android:id="@+id/appName"
-        android:layout_width="199dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"

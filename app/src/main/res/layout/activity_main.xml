@@ -8,8 +8,6 @@
     tools:context=".MainActivity">
 
     <!-- 최상단에 고정된 TextView -->
-    <!-- -->
-
 
     <TextView
         android:id="@+id/appName"
