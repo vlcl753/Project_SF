@@ -30,10 +30,9 @@
         android:layout_width="17dp"
         android:layout_height="29dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
-        app:layout_constraintEnd_toStartOf="@+id/appName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
         app:srcCompat="@drawable/back_img" />
 
     <!-- 최하단 확인,취소 버튼 -->

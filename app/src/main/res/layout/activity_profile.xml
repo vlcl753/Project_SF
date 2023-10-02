@@ -32,22 +32,20 @@
         android:layout_width="17dp"
         android:layout_height="29dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
-        app:layout_constraintEnd_toStartOf="@+id/appName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
         app:srcCompat="@drawable/back_img" />
+
 
     <ImageView
         android:id="@+id/img_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="0dp"
-        android:layout_marginLeft="60dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="22dp"
         android:onClick="img_setting_click"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/appName"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_settings"
         />
@@ -78,9 +76,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="150dp"
                 android:layout_marginTop="10dp"
-                app:cardCornerRadius="30dp">
+                android:layout_gravity="center"
+                app:cardCornerRadius="30dp"
+                >
                 <!--프로필 이미지-->
 
                 <ImageView
@@ -108,7 +107,8 @@
             <!-- 프로필 사진 밑 카드뷰 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <!-- Message 버튼과 팔로잉/워 텍스트를 감싼 레이아웃 -->
                 <LinearLayout
@@ -123,7 +123,8 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="45dp"
                         android:text="message"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        />
 
 
                     <!-- follow , following 표시 -->
@@ -131,7 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
-                        android:layout_marginTop="7dp">
+                        android:layout_marginTop="7dp"
+                        >
 
                         <TextView
                             android:id="@+id/textView_following_num"
