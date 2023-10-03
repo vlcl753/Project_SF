@@ -6,45 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".TestActivity">
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="30dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/move_Profile" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
-
-    <Button
-        android:id="@+id/move_Login"
-        android:layout_width="101dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:onClick="LoginClick"
-        android:text="로그인"
+        android:background="#EEEEEE"
+        android:gravity="top"
+        android:hint="Enter Text Here"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/move_Profile"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:onClick="ProflieClick"
-        android:text="프로필"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/move_Login" />
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="Save Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
