@@ -9,6 +9,9 @@
 
 
     <!-- 둥근 네모 -->
+
+
+    <!-- 상단 SELFIT Logo -->
     <View
         android:id="@+id/roundrect"
         android:layout_width="match_parent"
@@ -17,13 +20,10 @@
         android:clipToOutline="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-
-
-    <!-- 상단 SELFIT Logo -->
     <TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
@@ -78,6 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
     <!-- 하단 댓글창 -->
+
     <View
         android:id="@+id/some_id"
         android:layout_width="350dp"
@@ -85,8 +86,8 @@
         android:background="@drawable/chatbar"
         android:clipToOutline="true"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="680dp" />
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="674dp" />
 
     <TextView
         android:id="@+id/Chatview"

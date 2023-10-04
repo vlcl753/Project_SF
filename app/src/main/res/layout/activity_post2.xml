@@ -10,7 +10,7 @@
 
     <View
         android:id="@+id/navigationbar"
-        android:layout_width="411dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:background="@drawable/navigationbar"
         android:clipToOutline="true"
