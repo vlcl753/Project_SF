@@ -51,7 +51,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical">
 
             <!-- ScrollView 내부에 추가할 스크롤 가능한 뷰들을 이곳에 배치합니다 -->
@@ -104,7 +103,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-
                         android:gravity="center"
                         android:text="TODAY'S SELFIT"
                         android:textSize="30dp"
@@ -148,6 +146,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
+                                        android:onClick="goToPostActivity"
                                         android:src="@drawable/test1"
 
                                         />

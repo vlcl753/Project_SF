@@ -1,11 +1,17 @@
 package com.example.sfproject;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 import android.os.Bundle;
 import android.widget.ViewFlipper;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    public void goToPostActivity(View view) {
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
+    }
 
     ViewFlipper v_fllipper;
 
