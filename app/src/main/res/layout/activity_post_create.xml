@@ -112,7 +112,8 @@
             android:layout_height="wrap_content"
             android:text="등록하기"
             android:textColor="#FFFFFF"
-            android:background="#C62828"/>
+            android:background="#C62828"
+            />
 
 
 
