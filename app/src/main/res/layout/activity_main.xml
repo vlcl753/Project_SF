@@ -51,7 +51,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical">
 
             <!-- ScrollView 내부에 추가할 스크롤 가능한 뷰들을 이곳에 배치합니다 -->
@@ -69,15 +68,12 @@
                 app:cardElevation="0dp">
                 <!--배너 이미지-->
 
-                <ImageView
-                    android:id="@+id/banner1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:background="@color/cardview_dark_background"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test2"
-                    android:contentDescription="배너창입니당" />
+                <ViewFlipper
+                    android:id="@+id/image_slide"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
             </androidx.cardview.widget.CardView>
+
             <!--배너 순서 표기 들어갈 자리-->
             <TextView
                 android:id="@+id/textView2"
@@ -107,7 +103,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-
                         android:gravity="center"
                         android:text="TODAY'S SELFIT"
                         android:textSize="30dp"
@@ -151,6 +146,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
+                                        android:onClick="goToPostActivity"
                                         android:src="@drawable/test1"
 
                                         />
