@@ -4,8 +4,15 @@ import android.widget.ImageView;
 import android.os.Bundle;
 import android.widget.ViewFlipper;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.MenuItem;
+import com.google. android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
+    MainActivity mainActivity;
+    Post_CreateActivity post_createActivity;
+    ProfileActivity profileActivity;
 
     ViewFlipper v_fllipper;
 

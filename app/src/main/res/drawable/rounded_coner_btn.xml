@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape
+            android:shape="rectangle">
+            <corners
+                android:radius="10dp" /> <!-- 원하는 둥근 정도에 따라 조정 -->
+            <solid android:color="@color/skyBlue" /> <!-- 배경색 -->
+        </shape>
+    </item>
+</selector>
