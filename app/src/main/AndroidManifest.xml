@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".reportActivity"
             android:exported="false"
             android:theme="@style/DialogTheme"/>
@@ -31,11 +30,7 @@
             android:exported="false"
             android:theme="@style/DialogTheme" />
         <activity
-            android:name=".MainActivity"
-=======
-            android:name=".Post_CreateActivity"
->>>>>>> e3f80e390025c9f10307a240c67dbf38328e5be7
-            android:exported="false" />
+            android:name=".MainActivity"/>
         <activity
             android:name=".RealPostActivity"
             android:exported="false" />
@@ -64,7 +59,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-<<<<<<< HEAD
             android:name=".Post_CreateActivity"
             android:exported="true">
             <intent-filter>
@@ -73,11 +67,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-=======
-            android:name=".MainActivity"
-            android:exported="false" />
-
->>>>>>> e3f80e390025c9f10307a240c67dbf38328e5be7
     </application>
 
 </manifest>
