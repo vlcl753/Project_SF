@@ -4,19 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFEFEF"
     tools:context=".PostActivity">
 
-    <View
-        android:id="@+id/roundrect"
-        android:layout_width="375dp"
-        android:layout_height="527dp"
-        android:clipToOutline="true"
-        android:background=
-            "@drawable/roundrect"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        />
+    <!-- 최상단에 고정된 TextView -->
 
-    <!-- 상단 SELFIT -->
     <TextView
         android:id="@+id/appName"
         android:layout_width="199dp"
@@ -28,47 +20,167 @@
         android:textColor="#B2B6C0"
         android:textSize="30dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 최상단에 고정된 뒤로가기 ImageView-->
 
-    <!-- 하단 네비게이션 -->
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="MainActivity">
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="17dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:onClick="goToMainActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        app:srcCompat="@drawable/back_img" />
 
-        <FrameLayout
-            android:id="@+id/containers"
+
+    <ImageView
+        android:id="@+id/menudots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="22dp"
+        android:onClick="img_setting_click"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menudots"
+        />
+
+
+    <!-- 스크롤뷰 -->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appName">
+
+        <!-- 스크롤뷰 내부에 LinearLayout 추가 -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:background="#EFEFEF"
+            android:orientation="vertical">
 
-            <!-- 프로필 사진 -->
-            <View xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/RachardProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginLeft="145dp"
-                android:layout_marginTop="60dp"
-                android:background="@color/black"
-                android:clipToOutline="true" />
+            <!-- ScrollView 내부에 추가할 스크롤 가능한 뷰들을 이곳에 배치합니다 -->
 
-            <!-- 사용자 이름 -->
+
+            <!--프로필 사진 테두리 컨테이너-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="30dp"
+                >
+                <!--프로필 이미지-->
+
+                <ImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sjg__" />
+            </androidx.cardview.widget.CardView>
+
+            <!--프로필 밑 이름-->
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="182dp"
-                android:layout_marginTop="183dp"
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
                 android:text="Richard"
-                android:textStyle="bold" />
+                android:textSize="16dp" />
 
-        </FrameLayout>
-    </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="594dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="0dp">
+                <!-- 게시물 레이아웃-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/posttitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="Title"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/postpic"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:src="@drawable/test1" />
+
+                    <TextView
+                        android:id="@+id/postcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="Content, Content, Content, Content, Content"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/postcontent1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="Content, Content, Content, Content, Content"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+    <!-- 하단 채팅바 -->
+    <View
+        android:id="@+id/navigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- EditText -->
+    <EditText
+        android:id="@+id/otherEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#e5e5e5"
+        android:hint="댓글을 입력하세요"
+        app:layout_constraintBottom_toTopOf="@id/navigationbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView2"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

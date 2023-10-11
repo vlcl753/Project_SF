@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".MainActivity">
+    android:background="#EFEFEF"
+    tools:context=".ProfileActivity">
 
     <!-- 최상단에 고정된 TextView -->
 
@@ -119,11 +119,12 @@
 
                     <!-- Message 버튼 -->
                     <Button
+                        android:id="@+id/profile_editbtn"
                         android:layout_width="140dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="45dp"
-                        android:text="message"
-                        android:textSize="20dp"
+                        android:text="프로필 편집"
+                        android:textSize="15dp"
                         />
 
 
