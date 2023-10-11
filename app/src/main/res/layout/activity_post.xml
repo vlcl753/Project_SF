@@ -106,7 +106,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="594dp"
+                android:layout_height="570dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="40dp"
                 app:cardElevation="0dp">
@@ -147,28 +147,37 @@
                     <TextView
                         android:id="@+id/postcontent1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:text="Content, Content, Content, Content, Content"
                         android:textSize="16sp" />
-
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewComments"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:scrollbars="vertical"
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
     </ScrollView>
     <!-- 하단 채팅바 -->
+
     <View
         android:id="@+id/navigationbar"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- EditText -->
     <EditText
-        android:id="@+id/otherEditText"
+        android:id="@+id/Comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -181,5 +190,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView2" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

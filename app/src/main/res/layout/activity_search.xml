@@ -21,7 +21,8 @@
             android:layout_height="35dp"
             android:layout_marginTop="7dp"
             android:background="#eeeeee"
-            android:src="@drawable/back_img" />
+            android:src="@drawable/back_img"
+            android:onClick="goToMainActivity"/>
 
         <EditText
             android:id="@+id/searchbar"
