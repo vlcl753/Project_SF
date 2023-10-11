@@ -5,4 +5,10 @@
     <color name="blue">#0046FF</color>
     <color name="skyBlue">#94A1D5</color>
     <color name="backColor">#EFEFEF</color>
+    <color name="colorPrimary">#84cdc2</color>
+    <color name="colorPrimaryDark">#5ea096</color>
+    <color name="colorAccent">#fb777a</color>
+    <!--팝업배경-->
+    <color name="dialogColor">#A6333333</color>
+
 </resources>
