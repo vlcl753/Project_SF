@@ -34,7 +34,7 @@ import java.util.TimeZone;
 
 public class Post_CreateActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private Button customButton, regButton;
+    private Button customButton, regButton , customButton_popup;
     private EditText titleEditText, contentEditText;
     private List<Uri> selectedImageUris = new ArrayList<>();
     private FirebaseStorage storage;
@@ -55,7 +55,15 @@ public class Post_CreateActivity extends AppCompatActivity {
         contentEditText = findViewById(R.id.content_et);
         customButton = findViewById(R.id.customButton);
         regButton = findViewById(R.id.reg_button);
+        customButton_popup = findViewById(R.id.customButton_popup);
 
+        customButton_popup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(Post_CreateActivity.this, Post_Create_popup.class);
+                startActivity(intent);
+            }
+        });
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +105,7 @@ public class Post_CreateActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageData = baos.toByteArray();
 
-            StorageReference imageRef = storageRef.child("MainPost_images/" + "Post-1/"+ documentName + ".jpg");
+            StorageReference imageRef = storageRef.child("MainPost_images/" + "Post-1/  "+ documentName + ".jpg");
             UploadTask uploadTask = imageRef.putBytes(imageData);
 
             uploadTask.addOnSuccessListener(taskSnapshot -> {
