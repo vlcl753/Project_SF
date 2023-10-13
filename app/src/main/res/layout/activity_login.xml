@@ -6,37 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:background="#EFEFEF">
-<TextView
-    android:id="@+id/appName"
-    android:layout_width="199dp"
-    android:layout_height="53dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:gravity="center"
-    android:text="@string/top_navigation_bar"
-    android:textColor="#B2B6C0"
-    android:textSize="30dp"
-    android:textStyle="bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:text="@string/top_navigation_bar"
+        android:textColor="#B2B6C0"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/et_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="212dp"
         android:background="@drawable/rounded_coner"
         android:ems="10"
         android:hint="이메일을 입력해주세요"
         android:inputType="textEmailAddress"
-        android:singleLine="false"
         android:paddingStart="10dp"
+        android:singleLine="false"
+        app:layout_constraintBottom_toTopOf="@+id/et_pwd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/appName"
+        android:layout_marginTop="50dp" />
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="300dp"
@@ -70,8 +71,6 @@
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:text="회원가입"
-        android:textDecoration=""
-        android:textStyle=""
         android:textColor="#B2B6C0"
         android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
