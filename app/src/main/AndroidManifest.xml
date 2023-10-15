@@ -16,7 +16,7 @@
             android:name=".SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".Post_CreateActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".Profile_EditActivity"
@@ -24,6 +24,14 @@
         <activity
             android:name=".PostActivity"
             android:exported="false" />
+        <activity
+            android:name=".reportActivity"
+            android:exported="false"
+            android:theme="@style/DialogTheme"/>
+        <activity
+            android:name=".Post_Create_popup"
+            android:exported="false"
+            android:theme="@style/DialogTheme" />
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
@@ -34,7 +42,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Post_CreateActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
