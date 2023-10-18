@@ -2,22 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-    android:id="@+id/home"
-    android:enabled="true"
-    android:icon="@drawable/ic_home"
-    android:title="홈"
-    app:showAsAction="always"
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="홈"
+        app:showAsAction="always"
     />
+    <item
+        android:id="@+id/search"
+        android:enabled="true"
+        android:icon="@drawable/search"
+        android:title="홈"
+        app:showAsAction="always"
+        />
 
     <item
-        android:id="@+id/addbtn"
+        android:id="@+id/add"
         android:enabled="true"
-        android:icon="@drawable/postadd"
+        android:icon="@drawable/add"
         android:title="글쓰기"
         app:showAsAction="always"
         />
+
     <item
-        android:id="@+id/notibtbn"
+        android:id="@+id/noti"
         android:enabled="true"
         android:icon="@drawable/notibtn"
         android:title="알람"
