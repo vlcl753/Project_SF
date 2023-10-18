@@ -85,7 +85,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:text="배너 순서 표기" />
+                android:text="" />
             <!--게시물 radius설정 틀-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
