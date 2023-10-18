@@ -124,6 +124,7 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="45dp"
                         android:text="프로필 편집"
+                        android:backgroundTint="@color/skyBlue"
                         android:textSize="15dp"
                         />
 
