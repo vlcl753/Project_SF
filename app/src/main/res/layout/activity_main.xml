@@ -73,7 +73,7 @@
                 <ViewFlipper
                     android:id="@+id/image_slide"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+                    android:layout_height="350dp"/>
             </androidx.cardview.widget.CardView>
 
             <!--배너 순서 표기 들어갈 자리-->

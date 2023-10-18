@@ -44,6 +44,9 @@
         <activity
             android:name=".Post_CreateActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Notification"
+            android:exported="false"/>
 
         <activity
             android:name=".MainActivity"
