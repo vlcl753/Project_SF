@@ -17,8 +17,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Profile_EditActivity"
             android:exported="false" />
@@ -45,22 +44,17 @@
         <activity
             android:name=".Post_CreateActivity"
             android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-        <activity
-            android:name=".Notification"
-            android:exported="false"/>
-
-
-
+        </activity>
     </application>
 
 </manifest>

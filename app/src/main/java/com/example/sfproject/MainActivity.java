@@ -54,15 +54,18 @@ public class MainActivity extends AppCompatActivity {
                 if (itemID == R.id.home) {
                     // 홈 아이템을 클릭했을 때 MainActivity로 이동
                     startActivity(new Intent(MainActivity.this, MainActivity.class));
-                } else if (itemID == R.id.addbtn) {
+                } else if (itemID == R.id.add) {
                     // 글쓰기 아이템을 클릭했을 때 Post_CreateActivity로 이동
                     startActivity(new Intent(MainActivity.this, Post_CreateActivity.class));
-                } else if (itemID == R.id.notibtbn) {
+                } else if (itemID == R.id.noti) {
                     // 알람 아이템을 클릭했을 때 Notification으로 이동
                     startActivity(new Intent(MainActivity.this, Notification.class));
                 } else if (itemID == R.id.setting) {
                     // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
                     startActivity(new Intent(MainActivity.this, Profile_EditActivity.class));
+                } else if (itemID == R.id.search) {
+                    // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
+                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 }
 
                 return false;
