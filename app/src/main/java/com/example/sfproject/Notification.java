@@ -6,16 +6,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.ImageView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Notification extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
+    private ImageView imgBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        imgBack = findViewById(R.id.img_back); // 이미지뷰를 XML 레이아웃과 연결
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 이미지뷰 클릭 시 MainActivity로 이동
+                startActivity(new Intent(Notification.this, MainActivity.class));
+            }
+        });
         bottomNavigationView = findViewById(R.id.bottom_navigationview);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -43,5 +53,6 @@ public class Notification extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 }

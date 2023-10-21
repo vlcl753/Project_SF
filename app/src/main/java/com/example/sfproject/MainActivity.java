@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         int images[] = {
-                R.drawable.banner1,
+                R.drawable.banner3,
                 R.drawable.banner2,
-                R.drawable.banner3
+                R.drawable.banner1
         };
 
         v_fllipper = findViewById(R.id.image_slide);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setBackgroundResource(image);
 
         v_fllipper.addView(imageView);
-        v_fllipper.setFlipInterval(4000);
+        v_fllipper.setFlipInterval(2300);
         v_fllipper.setAutoStart(true);
 
         // animation

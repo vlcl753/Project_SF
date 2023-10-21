@@ -73,7 +73,7 @@
                 <ViewFlipper
                     android:id="@+id/image_slide"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"/>
+                    android:layout_height="420dp"/>
             </androidx.cardview.widget.CardView>
 
             <!--배너 순서 표기 들어갈 자리-->
@@ -149,7 +149,7 @@
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
                                         android:onClick="goToPostActivity"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg01"
                                         android:contentDescription="@string/contents1_description"/>
 
                                     <LinearLayout
@@ -175,7 +175,7 @@
                                                 android:layout_height="35dp"
                                                 android:background="@color/cardview_dark_background"
                                                 android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
+                                                android:src="@drawable/sjg07" />
                                         </com.google.android.material.card.MaterialCardView>
 
                                         <TextView
@@ -199,7 +199,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
+                                android:text="벚꽃 보고 왔어요"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -279,7 +279,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg04"
 
                                         />
 
@@ -306,7 +306,7 @@
                                                 android:layout_height="35dp"
                                                 android:background="@color/cardview_dark_background"
                                                 android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
+                                                android:src="@drawable/sjg07" />
                                         </com.google.android.material.card.MaterialCardView>
 
                                         <TextView
@@ -330,7 +330,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
+                                android:text="공항 출근 룩"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -417,7 +417,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg05"
 
                                         />
 
@@ -444,7 +444,7 @@
                                                 android:layout_height="35dp"
                                                 android:background="@color/cardview_dark_background"
                                                 android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
+                                                android:src="@drawable/sjg07" />
                                         </com.google.android.material.card.MaterialCardView>
 
                                         <TextView
@@ -468,7 +468,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
+                                android:text="날씨 좋은 하루네요"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -548,7 +548,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg06"
 
                                         />
 
@@ -575,7 +575,7 @@
                                                 android:layout_height="35dp"
                                                 android:background="@color/cardview_dark_background"
                                                 android:scaleType="centerCrop"
-                                                android:src="@drawable/test1" />
+                                                android:src="@drawable/sjg07" />
                                         </com.google.android.material.card.MaterialCardView>
 
                                         <TextView
@@ -599,7 +599,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="8dp"
-                                android:text="오늘의 룩입니다"
+                                android:text="시원한 바닷가 다녀왔어요"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -649,6 +649,7 @@
                             </LinearLayout>
                         </LinearLayout>
 
+
                     </LinearLayout>
 
 
@@ -673,9 +674,8 @@
         <FrameLayout
             android:id="@+id/containers"
             android:layout_width="match_parent"
-            android:layout_height="645dp"
-            android:layout_weight="1"
-            />
+            android:layout_height="494dp"
+            android:layout_weight="1" />
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigationview"
             android:layout_width="match_parent"
