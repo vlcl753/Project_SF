@@ -41,6 +41,11 @@ public class Post_CreateActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseFirestore db;
 
+    public void goToMainActivity(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
