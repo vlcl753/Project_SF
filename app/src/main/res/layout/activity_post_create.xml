@@ -29,6 +29,8 @@
         android:layout_width="17dp"
         android:layout_height="29dp"
         android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:onClick="goToMainActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="10dp"
