@@ -90,7 +90,7 @@
                     android:layout_height="60dp"
                     android:background="@color/cardview_dark_background"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/test1" />
+                    android:src="@drawable/ijt_profile" />
 
             </com.google.android.material.card.MaterialCardView>
             <TextView
@@ -99,7 +99,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:text="'짱구'님이 회원님의 게시물을 좋아합니다.">
+                android:text="'ZI존진택'님이 회원님의 게시물을 좋아합니다.">
 
             </TextView>
 
@@ -134,7 +134,7 @@
                         android:layout_height="60dp"
                         android:background="@color/cardview_dark_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/test1" />
+                        android:src="@drawable/ijh_profile" />
 
                 </com.google.android.material.card.MaterialCardView>
                 <TextView
@@ -143,7 +143,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:text="'도라에몽'님이 '안녕하세요 스타일이 좋으시네요! 맞팔 부탁드려요.'라고 댓글을 달았습니다."></TextView>
+                    android:text="'S2제휘S2'님이 '안녕하세요 스타일이 좋으시네요! 맞팔 부탁드려요.'라고 댓글을 달았습니다."></TextView>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
