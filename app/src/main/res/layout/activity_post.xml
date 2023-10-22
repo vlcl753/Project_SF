@@ -157,13 +157,19 @@
             </androidx.cardview.widget.CardView>
             <ImageView
                 android:id="@+id/compic"
-                android:layout_width="500dp"
+                android:layout_width="600dp"
                 android:layout_height="113dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:src="@drawable/comm" />
+                android:gravity="top"
+                android:src="@drawable/commex" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <ImageView
+                android:id="@+id/blank"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:src="@drawable/navigation" />
+
+            <!--<androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -172,7 +178,7 @@
                 android:layout_weight="1"
                 android:nestedScrollingEnabled="false"
                 android:padding="8dp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical" /> -->
         </LinearLayout>
     </ScrollView>
     <!-- 하단 채팅바 -->
