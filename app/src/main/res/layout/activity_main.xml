@@ -993,7 +993,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical|center_horizontal"
                                             android:layout_marginLeft="5dp"
-                                            android:text=""
+                                            android:text="짱멋쟁이정기"
                                             android:textColor="@color/white"
                                             android:textStyle="bold" />
                                     </LinearLayout>
