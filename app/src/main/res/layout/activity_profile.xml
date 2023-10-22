@@ -100,7 +100,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
-                android:text="공듀덩기"
+                android:text="짱멋쟁이정기"
                 android:textSize="25dp" />
 
 
@@ -241,7 +241,8 @@
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
                                         android:src="@drawable/sjg01"
-
+                                        android:clickable="true"
+                                        android:focusable="true"
                                         />
 
                                 </androidx.cardview.widget.CardView>
@@ -280,7 +281,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/sjg02"
+                                        android:src="@drawable/sjg08"
 
                                         />
 
@@ -576,7 +577,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg09"
 
                                         />
 

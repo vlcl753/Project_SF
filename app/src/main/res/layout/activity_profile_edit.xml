@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sjg__"/>
+                android:src="@drawable/sjg07"/>
         </androidx.cardview.widget.CardView>
 
         <!--프로필 밑 사진 변경 텍스트 -->
@@ -131,7 +131,7 @@
                         android:layout_width="200dp"
                         android:layout_height="50dp"
                         android:inputType="textPersonName"
-                        android:text="20학번 새내기"
+                        android:text="짱멋쟁이정기"
                         android:gravity="center" />
 
             </LinearLayout>
