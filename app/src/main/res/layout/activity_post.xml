@@ -157,7 +157,7 @@
 
                         android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:text="미안하다.. 이거 보여주려고 봄인 척 해봤다..\n날씨 좋던 봄에 입은 룩입니다!\n 상의는 연두색 셔츠, 하의는 베이지색 와이드 카고팬츠로\n톤온톤 코디를 해보았습니다!"
+                        android:text="미안하다.. 이거 보여주려고 꽃인 척 해봤다..\n날씨 좋던 봄에 입은 룩입니다!\n 상의는 연두색 셔츠, 하의는 베이지색 와이드 카고팬츠로\n톤온톤 코디를 해보았습니다!"
                         android:textSize="16sp" />
 
 
