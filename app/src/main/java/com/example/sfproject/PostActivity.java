@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Comment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +27,12 @@ public class PostActivity extends AppCompatActivity {
     private EditText commentEditText;
     private Button addCommentButton;
     //private RecyclerView commentRecyclerView;
-    private CommentAdapter commentAdapter;
+    //private CommentAdapter commentAdapter;
     private ArrayList<Comment> commentsList;
 
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+
 
     public void goToMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -47,7 +51,7 @@ public class PostActivity extends AppCompatActivity {
         // commentRecyclerView = findViewById(R.id.recyclerViewComments);
 
         commentsList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentsList);
+        //commentAdapter = new CommentAdapter(commentsList);
         //commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //commentRecyclerView.setAdapter(commentAdapter);
 
@@ -76,9 +80,9 @@ public class PostActivity extends AppCompatActivity {
 
                     for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                            Comment comment = documentChange.getDocument().toObject(Comment.class);
-                            commentsList.add(comment);
-                            commentAdapter.notifyDataSetChanged();
+                            //Comment comment = documentChange.getDocument().toObject(Comment.class);
+                            //commentsList.add(comment);
+                            //commentAdapter.notifyDataSetChanged();
                         }
                     }
                 });
