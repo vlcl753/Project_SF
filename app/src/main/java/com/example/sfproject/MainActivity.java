@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
                     startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 } else if (itemID == R.id.search) {
-                    // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
+                    // 설정 아이템을 클릭했을 때 Profile_SearchActivity로 이동
                     startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 }
 
