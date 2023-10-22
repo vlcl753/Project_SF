@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sjg__" />
+                    android:src="@drawable/sjg07" />
             </androidx.cardview.widget.CardView>
 
             <!--프로필 밑 이름-->
@@ -100,7 +100,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
-                android:text="@string/app_name"
+                android:text="공듀덩기"
                 android:textSize="25dp" />
 
 
@@ -240,7 +240,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg01"
 
                                         />
 
@@ -280,7 +280,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg02"
 
                                         />
 
@@ -320,7 +320,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg03"
 
                                         />
 
@@ -367,7 +367,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg04"
 
                                         />
 
@@ -409,7 +409,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg05"
 
                                         />
 
@@ -447,7 +447,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg06"
 
                                         />
 
@@ -496,7 +496,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg07"
 
                                         />
 
@@ -538,7 +538,7 @@
                                         android:layout_gravity="center"
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/test1"
+                                        android:src="@drawable/sjg__"
 
                                         />
 
