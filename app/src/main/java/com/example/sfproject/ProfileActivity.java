@@ -18,6 +18,10 @@ public class ProfileActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ImageView profile_post1; // 이미지뷰 선언
 
+    public void openProfileTwoActivity(View view) {
+        Intent intent = new Intent(this, PostActivityTwo.class);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

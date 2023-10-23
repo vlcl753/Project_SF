@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:gravity="center"
-                        android:text="누가 꽃이게?"
+                        android:text="슬슬.. 코트를 꺼낼때가.."
                         android:textSize="30dp"
                         android:textStyle="bold" />
 
@@ -138,21 +138,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="500dp"
                         android:gravity="center"
-                        android:src="@drawable/sjg01" />
+                        android:src="@drawable/sjg08" />
                     <ImageView
                         android:id="@+id/postpic2"
                         android:layout_width="match_parent"
                         android:layout_height="500dp"
                         android:layout_marginTop="15dp"
                         android:gravity="center"
-                        android:src="@drawable/sjg02" />
-                    <ImageView
-                        android:id="@+id/postpic3"
-                        android:layout_width="match_parent"
-                        android:layout_height="450dp"
-
-                        android:gravity="center"
-                        android:src="@drawable/sjg03" />
+                        android:src="@drawable/sjg10" />
+                    \
 
                     <TextView
                         android:id="@+id/postcontent"
@@ -161,19 +155,12 @@
 
                         android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:text="미안하다.. 이거 보여주려고 꽃인 척 해봤다..\n날씨 좋던 봄에 입은 룩입니다!\n 상의는 연두색 셔츠, 하의는 베이지색 와이드 카고팬츠로\n톤온톤 코디를 해보았습니다!"
+                        android:text="날씨가 이제는 엄청 쌀쌀하네요\n이제 잠들어 있던 코트를 꺼내 줄 때가 온 것 같군요!\n롱 코트 안에 트위드 블레이저를 레이어드 하여\n코디해 보았습니다!"
                         android:textSize="16sp" />
 
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <ImageView
-                android:id="@+id/compic"
-                android:layout_width="600dp"
-                android:layout_height="113dp"
-                android:layout_marginTop="10dp"
-                android:gravity="top"
-                android:src="@drawable/commex" />
 
             <ImageView
                 android:id="@+id/blank"

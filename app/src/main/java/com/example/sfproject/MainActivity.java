@@ -13,7 +13,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    public void goToPostActivity(View view) {
+
+    public void openProfileTwoActivity(View view) {
+        Intent intent = new Intent(this, PostActivityTwo.class);
+        startActivity(intent);
+    }
+    public void goToPostActivity(View view
+    ) {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
     }

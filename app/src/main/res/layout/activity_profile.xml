@@ -282,6 +282,7 @@
                                         android:background="@color/cardview_dark_background"
                                         android:scaleType="centerCrop"
                                         android:src="@drawable/sjg08"
+                                        android:onClick="openProfileTwoActivity"
 
                                         />
 
