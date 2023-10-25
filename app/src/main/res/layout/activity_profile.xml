@@ -25,17 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 최상단에 고정된 뒤로가기 ImageView-->
 
-    <ImageView
-        android:id="@+id/img_back"
-        android:layout_width="17dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="10dp"
-        app:srcCompat="@drawable/back_img" />
 
 
     <ImageView
