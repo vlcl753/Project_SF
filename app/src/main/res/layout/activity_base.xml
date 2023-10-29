@@ -25,30 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--Bottom_navigation_Bar-->
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="MainActivity">
-
-        <FrameLayout
-            android:id="@+id/containers"
-            android:layout_width="match_parent"
-            android:layout_height="645dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigationview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            app:itemBackground="@color/white"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_menu" />
-    </LinearLayout>
 
 
 
@@ -71,12 +47,12 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appName">
-
 
 
         <!-- 스크롤뷰 내부에 LinearLayout 추가 -->
@@ -93,10 +69,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                app:cardCornerRadius="30dp"
-                >
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="30dp">
                 <!--프로필 이미지-->
 
                 <ImageView
@@ -124,8 +99,7 @@
             <!-- 프로필 사진 밑 카드뷰 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <!-- Message 버튼과 팔로잉/워 텍스트를 감싼 레이아웃 -->
                 <LinearLayout
@@ -140,10 +114,9 @@
                         android:layout_width="140dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="45dp"
-                        android:text="프로필 편집"
                         android:backgroundTint="@color/skyBlue"
-                        android:textSize="15dp"
-                        />
+                        android:text="프로필 편집"
+                        android:textSize="15dp" />
 
 
                     <!-- follow , following 표시 -->
@@ -151,8 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
-                        android:layout_marginTop="7dp"
-                        >
+                        android:layout_marginTop="7dp">
 
                         <TextView
                             android:id="@+id/textView_following_num"
@@ -203,9 +175,6 @@
             </androidx.cardview.widget.CardView>
 
 
-
-
-
             <!--게시물 radius설정 틀-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_post"
@@ -216,13 +185,49 @@
                 app:cardElevation="0dp">
 
 
-
-
-
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
+
+
+    <!--Bottom_navigation_Bar-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!--Bottom_navigation_Bar-->
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <FrameLayout
+                android:id="@+id/containers"
+                android:layout_width="match_parent"
+                android:layout_height="645dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigationview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                app:itemBackground="@color/white"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_menu" />
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 
 
