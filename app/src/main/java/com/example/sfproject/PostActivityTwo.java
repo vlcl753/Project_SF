@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 
 public class PostActivityTwo extends AppCompatActivity {
+
     public void openProfileActivity(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
+    }public void finishPost2Activity(View view) {
+        finish();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
