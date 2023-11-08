@@ -8,23 +8,53 @@
     android:background="@color/backColor">
 
 
-
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="199dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="120dp"
-        android:gravity="center"
-        android:text="@string/top_navigation_bar"
-        android:textColor="#B2B6C0"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/et_email"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002" />
+        app:layout_constraintVertical_bias="0.48000002"
+        android:id="@+id/et_profile"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
 
+        >
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="0dp"
+        >
+        <!--프로필 -->
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/cardview_dark_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile"
+            android:clickable="true"
+            android:onClick="onProfileImageClick"
+            android:contentDescription="프로필 이미지 선택"/>
+    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:background="@drawable/rounded_coner"
+        android:ems="10"
+        android:hint="닉네임을 입력해주세요"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:singleLine="false"
+        app:layout_constraintBottom_toTopOf="@+id/et_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile"
+        android:layout_marginTop="50dp" />
     <EditText
         android:id="@+id/et_email"
         android:layout_width="300dp"
@@ -35,11 +65,12 @@
         android:inputType="textEmailAddress"
         android:paddingStart="10dp"
         android:singleLine="false"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/et_pwd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName"
-        android:layout_marginTop="50dp" />
+        app:layout_constraintTop_toBottomOf="@+id/et_name"
+         />
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="300dp"
