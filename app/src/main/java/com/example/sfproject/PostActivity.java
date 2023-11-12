@@ -110,31 +110,33 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        String postImage = getIntent().getExtras().getString("postImage") ;
-        Glide.with(this).load(postImage).into(postPic);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String postImage = extras.getString("postImage");
+            Glide.with(this).load(postImage).into(postPic);
 
-        String postImage2 = getIntent().getExtras().getString("postImage2") ;
-        Glide.with(this).load(postImage).into(postPic2);
+            String postImage2 = extras.getString("postImage2");
+            Glide.with(this).load(postImage2).into(postPic2);
 
-        String postImage3 = getIntent().getExtras().getString("postImage3") ;
-        Glide.with(this).load(postImage).into(postPic3);
+            String postImage3 = extras.getString("postImage3");
+            Glide.with(this).load(postImage3).into(postPic3);
 
-        String postTitle = getIntent().getExtras().getString("title");
-        txtPostTitle.setText(postTitle);
+            String postTitle = extras.getString("title");
+            txtPostTitle.setText(postTitle);
 
-        String userpostImage = getIntent().getExtras().getString("userPhoto");
-        Glide.with(this).load(userpostImage).into(imgProfile);
+            String userpostImage = extras.getString("userPhoto");
+            Glide.with(this).load(userpostImage).into(imgProfile);
 
-        String postDescription = getIntent().getExtras().getString("description");
-        txtPostContent.setText(postDescription);
+            String postDescription = extras.getString("description");
+            txtPostContent.setText(postDescription);
 
-        // setcomment user image
+            // get post id
+            PostKey = extras.getString("postKey");
 
-        // get post id
-        PostKey = getIntent().getExtras().getString("postKey");
+            String date = timestampToString(extras.getLong("postDate"));
+            txtPostDate.setText(date);
+        }
 
-        String date = timestampToString(getIntent().getExtras().getLong("postDate"));
-        txtPostDate.setText(date);
 
         iniRvComment();
     }
@@ -167,12 +169,11 @@ public class PostActivity extends AppCompatActivity {
             private void showMessage (String message){
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
-
     private String timestampToString(long time) {
 
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
-        String date = DateFormat.format("dd-MM-yyyy",calendar).toString();
+        String date = DateFormat.format("yyyy-MM-dd",calendar).toString();
         return date;
     }
 }
