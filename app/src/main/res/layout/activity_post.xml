@@ -124,7 +124,19 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/posttitle"
+                        android:textSize="12sp"
+                        android:id="@+id/postDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        tools:text="2023 nov 11" />
+
+                    <TextView
+                        android:id="@+id/postTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -133,29 +145,29 @@
                         android:textSize="30dp"
                         android:textStyle="bold" />
 
+
                     <ImageView
-                        android:id="@+id/postpic"
+                        android:id="@+id/postPic"
                         android:layout_width="match_parent"
                         android:layout_height="500dp"
                         android:gravity="center"
                         android:src="@drawable/sjg01" />
                     <ImageView
-                        android:id="@+id/postpic2"
+                        android:id="@+id/postPic2"
                         android:layout_width="match_parent"
                         android:layout_height="500dp"
                         android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:src="@drawable/sjg02" />
                     <ImageView
-                        android:id="@+id/postpic3"
+                        android:id="@+id/postPic3"
                         android:layout_width="match_parent"
                         android:layout_height="450dp"
-
                         android:gravity="center"
                         android:src="@drawable/sjg03" />
 
                     <TextView
-                        android:id="@+id/postcontent"
+                        android:id="@+id/postContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -167,30 +179,16 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <ImageView
-                android:id="@+id/compic"
-                android:layout_width="600dp"
-                android:layout_height="113dp"
-                android:layout_marginTop="10dp"
-                android:gravity="top"
-                android:src="@drawable/commex" />
-
-            <ImageView
-                android:id="@+id/blank"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:src="@drawable/navigation" />
-
-            <!--<androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="30dp"
                 android:layout_weight="1"
                 android:nestedScrollingEnabled="false"
                 android:padding="8dp"
-                android:scrollbars="vertical" /> -->
+                android:scrollbars="vertical" />
         </LinearLayout>
     </ScrollView>
     <!-- 하단 채팅바 -->
