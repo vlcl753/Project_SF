@@ -64,7 +64,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        RvComment = findViewById(R.id.recyclerViewComments);
+    /*    RvComment = findViewById(R.id.recyclerViewComments);
         postPic = findViewById(R.id.postPic);
         postPic2 = findViewById(R.id.postPic2);
         postPic3 = findViewById(R.id.postPic3);
@@ -175,7 +175,10 @@ public class PostActivity extends AppCompatActivity {
         calendar.setTimeInMillis(time);
         String date = DateFormat.format("yyyy-MM-dd",calendar).toString();
         return date;
+
+     */
     }
 }
+
 
 
