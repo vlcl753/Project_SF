@@ -1,10 +1,13 @@
 package com.example.sfproject;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -24,6 +27,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private Button profile_editbtn;
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private static final int NUM_COLUMNS = 3;
@@ -40,6 +44,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         // 데이터 갯수 가져오기
         getTotalItemsCount();
+
+
+        setContentView(R.layout.activity_profile);
+
+        profile_editbtn = findViewById(R.id.profile_editbtn);
+        profile_editbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, Profile_EditActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void createCardViews(List<String> imagePaths) {
