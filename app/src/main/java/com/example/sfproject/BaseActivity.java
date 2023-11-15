@@ -1,26 +1,50 @@
 package com.example.sfproject;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.ListResult;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BaseActivity extends AppCompatActivity {
+
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private static final int NUM_COLUMNS = 3;
-    private int totalPosts = 20; // 게시물의 총 갯수
+
+    String USER_UID = "ikZZTQIEEAetiZgPSFumXU1Cv3I3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        // CardView 동적 생성
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child("/Profile/" + USER_UID);
+
+        // 데이터 갯수 가져오기
+        getTotalItemsCount();
+    }
+
+    private void createCardViews(List<String> imagePaths) {
         CardView cardView = createCardView();
 
-        // 전체 레이아웃 동적 생성
         LinearLayout parentLayout = new LinearLayout(this);
         LinearLayout.LayoutParams parentLayoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -28,11 +52,9 @@ public class BaseActivity extends AppCompatActivity {
         parentLayout.setOrientation(LinearLayout.VERTICAL);
         parentLayout.setGravity(Gravity.CENTER);
 
-        // 게시물의 총 갯수를 기준으로 이미지를 배치
         LinearLayout rowLayout = null;
-        for (int i = 0; i < totalPosts; i++) {
+        for (int i = 0; i < imagePaths.size(); i++) {
             if (i % NUM_COLUMNS == 0) {
-                // 새로운 줄 시작
                 rowLayout = new LinearLayout(this);
                 LinearLayout.LayoutParams rowLayoutParams = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -40,21 +62,43 @@ public class BaseActivity extends AppCompatActivity {
                 rowLayout.setOrientation(LinearLayout.HORIZONTAL);
                 parentLayout.addView(rowLayout);
             }
-            rowLayout.addView(createCardView_1(R.drawable.sjg01));
+            rowLayout.addView(createCardView_1(imagePaths.get(i)));
         }
 
-        // 남은 빈 칸을 빈 CardView로 채우기
-        int emptySpaces = NUM_COLUMNS - (totalPosts % NUM_COLUMNS);
+        int emptySpaces = NUM_COLUMNS - (imagePaths.size() % NUM_COLUMNS);
         for (int i = 0; i < emptySpaces; i++) {
             rowLayout.addView(createEmptyCardView());
         }
 
-        // 생성한 전체 레이아웃을 CardView에 추가
         cardView.addView(parentLayout);
-
-        // CardView를 원하는 뷰 그룹에 추가
-        ViewGroup rootView = findViewById(R.id.profile_post); // 여기서 "profile_post"는 CardView를 추가할 LinearLayout의 ID입니다.
+        ViewGroup rootView = findViewById(R.id.profile_post);
         rootView.addView(cardView);
+    }
+
+    private void getImagesFromStorage(int totalPosts) {
+        final List<String> imagePaths = new ArrayList<>();
+        for (int i = 1; i <= totalPosts; i++) {
+            imagePaths.add("Profile_photo-" + i + ".jpg");
+        }
+
+        createCardViews(imagePaths);
+    }
+
+    private void getTotalItemsCount() {
+        storageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                List<StorageReference> items = listResult.getItems();
+                int totalPosts = items.size();
+                Log.d("StorageItemCount", "데이터 갯수: " + totalPosts);
+                getImagesFromStorage(totalPosts);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 데이터 갯수 가져오기 실패 시 처리할 작업을 여기에 추가하세요.
+            }
+        });
     }
 
     private CardView createCardView() {
@@ -78,7 +122,7 @@ public class BaseActivity extends AppCompatActivity {
         return cardView;
     }
 
-    private CardView createCardView_1(int imageResId) {
+    private CardView createCardView_1(String imagePath) {
         CardView cardView = new CardView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 dpToPixels(105), dpToPixels(105));
@@ -87,21 +131,44 @@ public class BaseActivity extends AppCompatActivity {
         cardView.setCardElevation(0);
         cardView.setRadius(dpToPixels(20));
 
-        // ImageView 생성 및 설정
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         imageView.setLayoutParams(params);
-        imageView.setImageResource(imageResId);
+
+        // Firebase Storage에서 이미지 로드
+        loadFirebaseImage(imageView, imagePath);
+
         imageView.setClickable(true);
         imageView.setFocusable(true);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // ImageView를 CardView에 추가
         cardView.addView(imageView);
 
         return cardView;
+    }
+
+    private void loadFirebaseImage(ImageView imageView, String imagePath) {
+        // Firebase Storage에 있는 이미지의 StorageReference 가져오기
+        StorageReference imageRef = storageRef.child(imagePath);
+
+        // 이미지의 다운로드 URL을 얻어오기
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Glide를 사용하여 이미지 로드
+                Glide.with(BaseActivity.this)
+                        .load(uri)
+                        .into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 이미지 로드 실패 시 처리
+                Log.e("ImageLoad", "이미지 로드 실패: " + e.getMessage());
+            }
+        });
     }
 
     private int dpToPixels(float dp) {

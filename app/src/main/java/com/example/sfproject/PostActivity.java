@@ -3,36 +3,54 @@ package com.example.sfproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class PostActivity extends AppCompatActivity {
-    private EditText commentEditText;
-    private Button addCommentButton;
-    //private RecyclerView commentRecyclerView;
-    //private CommentAdapter commentAdapter;
-    private ArrayList<Comment> commentsList;
 
-    private FirebaseFirestore db;
-    private FirebaseAuth auth;
+    ImageView postPic,postPic2,postPic3,imgProfile;
+    TextView txtPostContent,txtPostDate,txtPostTitle,txtPostName;
 
+    EditText editTextComment;
+    Button btnAddComment;
+    String PostKey;
+
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
+    RecyclerView RvComment;
+    CommentAdapter commentAdapter;
+    List<Comment> listComment;
+    static String COMMENT_KEY = "Comment" ;
 
     public void goToMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -46,71 +64,118 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        RvComment = findViewById(R.id.recyclerViewComments);
+        postPic = findViewById(R.id.postPic);
+        postPic2 = findViewById(R.id.postPic2);
+        postPic3 = findViewById(R.id.postPic3);
+        imgProfile = findViewById(R.id.img_profile);
 
-        db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
+        txtPostTitle = findViewById(R.id.postTitle);
+        txtPostContent = findViewById(R.id.postContent);
+        txtPostDate = findViewById(R.id.postDate);
+        txtPostName = findViewById(R.id.profile_name);
 
-        commentEditText = findViewById(R.id.Comments);
-        addCommentButton = findViewById(R.id.sendButton);
-        // commentRecyclerView = findViewById(R.id.recyclerViewComments);
+        editTextComment = findViewById(R.id.Comments);
+        btnAddComment = findViewById(R.id.sendButton);
 
-        commentsList = new ArrayList<>();
-        //commentAdapter = new CommentAdapter(commentsList);
-        //commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //commentRecyclerView.setAdapter(commentAdapter);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
-        // Load existing comments
-        loadComments();
-
-        addCommentButton.setOnClickListener(new View.OnClickListener() {
+        btnAddComment.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String commentText = commentEditText.getText().toString();
-                if (!commentText.isEmpty()) {
-                    addComment(commentText);
-                    commentEditText.setText("");
+                btnAddComment.setVisibility(View.INVISIBLE);
+                DatabaseReference commentReference = firebaseDatabase.getReference("Comment").child(PostKey).push();
+                String comment_content = editTextComment.getText().toString();
+                String uid = firebaseUser.getUid();
+                String uname = firebaseUser.getDisplayName();
+                String uimg = firebaseUser.getPhotoUrl().toString();
+                Comment comment = new Comment(comment_content,uid,uimg,uname);
+
+                commentReference.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        showMessage("댓글 작성");
+                        editTextComment.setText("");
+                        btnAddComment.setVisibility(View.VISIBLE);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showMessage("댓글 작성 실패 : " +e.getMessage());
+                    }
+                });
+
+            }
+        });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String postImage = extras.getString("postImage");
+            Glide.with(this).load(postImage).into(postPic);
+
+            String postImage2 = extras.getString("postImage2");
+            Glide.with(this).load(postImage2).into(postPic2);
+
+            String postImage3 = extras.getString("postImage3");
+            Glide.with(this).load(postImage3).into(postPic3);
+
+            String postTitle = extras.getString("title");
+            txtPostTitle.setText(postTitle);
+
+            String userpostImage = extras.getString("userPhoto");
+            Glide.with(this).load(userpostImage).into(imgProfile);
+
+            String postDescription = extras.getString("description");
+            txtPostContent.setText(postDescription);
+
+            // get post id
+            PostKey = extras.getString("postKey");
+
+            String date = timestampToString(extras.getLong("postDate"));
+            txtPostDate.setText(date);
+        }
+
+
+        iniRvComment();
+    }
+
+    private void iniRvComment() {
+        RvComment.setLayoutManager(new LinearLayoutManager(this));
+        DatabaseReference commentRef = firebaseDatabase.getReference(COMMENT_KEY).child(PostKey);
+        commentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listComment = new ArrayList<>();
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                    Comment comment = snap.getValue(Comment.class);
+                    listComment.add(comment);
+
                 }
+
+                commentAdapter = new CommentAdapter(getApplicationContext(), listComment);
+                RvComment.setAdapter(commentAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
 
-    private void loadComments() {
-        db.collection("comments")
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (e != null) {
-                        // Handle the error
-                        return;
-                    }
+            private void showMessage (String message){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    private String timestampToString(long time) {
 
-                    for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                            //Comment comment = documentChange.getDocument().toObject(Comment.class);
-                            //commentsList.add(comment);
-                            //commentAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-    }
-
-    private void addComment(String commentText) {
-        Map<String, Object> commentData = new HashMap<>();
-        commentData.put("content", commentText);
-        commentData.put("authorName", auth.getCurrentUser().getDisplayName());
-
-        // You can add the timestamp here if needed
-
-        db.collection("comments")
-                .add(commentData)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            DocumentReference documentReference = task.getResult();
-                            // Comment added successfully
-                        } else {
-                            // Handle the error
-                        }
-                    }
-                });
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        calendar.setTimeInMillis(time);
+        String date = DateFormat.format("yyyy-MM-dd",calendar).toString();
+        return date;
     }
 }
+
+
