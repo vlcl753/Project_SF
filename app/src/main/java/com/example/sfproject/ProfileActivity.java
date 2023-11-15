@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,16 @@ import androidx.cardview.widget.CardView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.ListResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -31,22 +36,23 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private static final int NUM_COLUMNS = 3;
+    private String userName; // 사용자 이름을 저장할 변수
 
+    private FirebaseFirestore firestore;
+    private static final String COLLECTION_NAME = "Profile";
     String USER_UID = "ikZZTQIEEAetiZgPSFumXU1Cv3I3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setContentView(R.layout.activity_profile);
 
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference().child("/Profile/" + USER_UID);
 
+        firestore = FirebaseFirestore.getInstance();
         // 데이터 갯수 가져오기
         getTotalItemsCount();
-
-
-        setContentView(R.layout.activity_profile);
 
         profile_editbtn = findViewById(R.id.profile_editbtn);
         profile_editbtn.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +62,63 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        loadUserName();
+        // Firebase Storage에서 이미지 로드
+        ImageView imgProfile = findViewById(R.id.img_profile);
+        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
     }
+
+
+    // ...
+
+    private void loadUserName() {
+        firestore.collection(COLLECTION_NAME)
+                .document(USER_UID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // 사용자 이름을 가져와서 TextView에 설정
+                            userName = documentSnapshot.getString("name");
+                            TextView profileNameTextView = findViewById(R.id.profile_name);
+                            profileNameTextView.setText(userName);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // 사용자 이름 로드 실패 시 처리
+                        Log.e("UserNameLoad", "사용자 이름 로드 실패: " + e.getMessage());
+                    }
+                });
+    }
+
+
+    private void loadFirebaseImage_profile(ImageView imageView, String imagePath) {
+        // Firebase Storage에 있는 이미지의 StorageReference 가져오기
+        StorageReference imageRef = storageRef.child(imagePath);
+
+        // 이미지의 다운로드 URL을 얻어오기
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Glide를 사용하여 이미지 로드
+                Glide.with(ProfileActivity.this)
+                        .load(uri)
+                        .into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 이미지 로드 실패 시 처리
+                Log.e("ImageLoad", "이미지 로드 실패: " + e.getMessage());
+            }
+        });
+    }
+
 
     private void createCardViews(List<String> imagePaths) {
         CardView cardView = createCardView();
