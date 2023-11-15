@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (user != null) {
                                             userId = user.getUid();
 
-                                            StorageReference imageRef = mStorageRef.child("profil2e_images/" + userId + ".jpg");
+                                            StorageReference imageRef = mStorageRef.child("profile_images/" + userId + ".jpg");
                                             imageRef.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
