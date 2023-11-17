@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -71,6 +72,21 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     // ...
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 사용자 이름 다시 불러오기
+        loadUserName();
+
+        // 프로필 이미지 다시 불러오기
+        ImageView imgProfile = findViewById(R.id.img_profile);
+        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+
+        // 기타 데이터를 다시 불러오는 작업을 추가할 수 있습니다.
+        // 예를 들어, 사용자의 다른 정보를 불러올 수 있습니다.
+    }
 
     private void loadUserName() {
         firestore.collection(COLLECTION_NAME)
@@ -224,6 +240,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         cardView.addView(imageView);
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 클릭 시 ProfileActivity로 이동하는 코드 추가
+                Intent intent = new Intent(ProfileActivity.this, Profile_EditActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return cardView;
     }
 
@@ -238,7 +263,10 @@ public class ProfileActivity extends AppCompatActivity {
                 // Glide를 사용하여 이미지 로드
                 Glide.with(ProfileActivity.this)
                         .load(uri)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .into(imageView);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
