@@ -185,6 +185,9 @@ public class Post_CreateActivity extends AppCompatActivity {
     }
 
     private void saveDataToFirestore(String documentName, Map<String, Object> postData) {
+
+        postData.put("Writer_User", User_UID);
+
         db.collection("Post")
                 .document(formattedDate)
                 .set(postData)
