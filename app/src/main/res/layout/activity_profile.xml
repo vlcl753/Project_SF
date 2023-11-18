@@ -30,7 +30,7 @@
 
 
     <ImageView
-        android:id="@+id/img_setting"
+        android:id="@+id/img_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"

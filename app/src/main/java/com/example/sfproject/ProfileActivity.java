@@ -68,6 +68,16 @@ public class ProfileActivity extends AppCompatActivity {
         // Firebase Storage에서 이미지 로드
         ImageView imgProfile = findViewById(R.id.img_profile);
         loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+
+        ImageView imgReport = findViewById(R.id.img_report);
+        imgReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, reportActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

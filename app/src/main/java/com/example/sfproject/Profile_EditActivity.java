@@ -30,7 +30,8 @@ public class Profile_EditActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private DocumentReference profileRef;
     private StorageReference imageRef;
-    private String imagePath = "/Profile/ikZZTQIEEAetiZgPSFumXU1Cv3I3/Profile_photo.jpg";
+    private String User_UID = "ikZZTQIEEAetiZgPSFumXU1Cv3I3";
+    private String imagePath = "/Profile/" + User_UID + "/Profile_photo.jpg" ;
     private Uri selectedImageUri;
 
     @Override
@@ -46,7 +47,7 @@ public class Profile_EditActivity extends AppCompatActivity {
         nicknameEditText = findViewById(R.id.nickname_edit);
 
         db = FirebaseFirestore.getInstance();
-        profileRef = db.collection("Profile").document("ikZZTQIEEAetiZgPSFumXU1Cv3I3");
+        profileRef = db.collection("Profile").document(User_UID);
 
         profileRef.addSnapshotListener(this, (documentSnapshot, e) -> {
             if (e != null) {
@@ -126,7 +127,7 @@ public class Profile_EditActivity extends AppCompatActivity {
     }
 
     private void uploadImageToFirebaseStorage(String newNickname) {
-        StorageReference newImageRef = FirebaseStorage.getInstance().getReference().child("/Profile/ikZZTQIEEAetiZgPSFumXU1Cv3I3/Profile_photo.jpg");
+        StorageReference newImageRef = FirebaseStorage.getInstance().getReference().child(imagePath);
         newImageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     newImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
