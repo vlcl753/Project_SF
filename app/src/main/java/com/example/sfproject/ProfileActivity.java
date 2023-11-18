@@ -203,27 +203,31 @@ public class ProfileActivity extends AppCompatActivity {
 
         LinearLayout parentLayout = new LinearLayout(this);
         LinearLayout.LayoutParams parentLayoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT); // 이 부분을 MATCH_PARENT에서 WRAP_CONTENT로 변경합니다.
         parentLayout.setLayoutParams(parentLayoutParams);
         parentLayout.setOrientation(LinearLayout.VERTICAL);
         parentLayout.setGravity(Gravity.CENTER);
 
-        LinearLayout rowLayout = null;
-        for (int i = 0; i < imagePaths.size(); i++) {
-            if (i % NUM_COLUMNS == 0) {
-                rowLayout = new LinearLayout(this);
-                LinearLayout.LayoutParams rowLayoutParams = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                rowLayout.setLayoutParams(rowLayoutParams);
-                rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-                parentLayout.addView(rowLayout);
-            }
-            rowLayout.addView(createCardView_1(imagePaths.get(i)));
-        }
+        int numRows = (int) Math.ceil((double) imagePaths.size() / NUM_COLUMNS); // 행의 수 계산
 
-        int emptySpaces = NUM_COLUMNS - (imagePaths.size() % NUM_COLUMNS);
-        for (int i = 0; i < emptySpaces; i++) {
-            rowLayout.addView(createEmptyCardView());
+        for (int row = 0; row < numRows; row++) {
+            LinearLayout rowLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams rowLayoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rowLayout.setLayoutParams(rowLayoutParams);
+            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            for (int col = 0; col < NUM_COLUMNS; col++) {
+                int index = row * NUM_COLUMNS + col;
+                if (index < imagePaths.size()) {
+                    rowLayout.addView(createCardView_1(imagePaths.get(index)));
+                } else {
+                    // 이미지가 채워지지 않은 공간에 빈 CardView 추가
+                    rowLayout.addView(createEmptyCardView());
+                }
+            }
+
+            parentLayout.addView(rowLayout);
         }
 
         cardView.addView(parentLayout);
