@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +32,10 @@ public class Profile_EditActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private DocumentReference profileRef;
     private StorageReference imageRef;
-    private String User_UID = "ikZZTQIEEAetiZgPSFumXU1Cv3I3";
+
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String User_UID = currentUser.getUid();
+
     private String imagePath = "/Profile/" + User_UID + "/Profile_photo.jpg" ;
     private Uri selectedImageUri;
 

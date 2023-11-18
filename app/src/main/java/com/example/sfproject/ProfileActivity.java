@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,7 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
     private static final String COLLECTION_NAME = "Profile";
-    String USER_UID = "ikZZTQIEEAetiZgPSFumXU1Cv3I3";
+
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String USER_UID = currentUser.getUid();
 
     private TextView Profile_follow_num;
     private TextView Profile_following_num;

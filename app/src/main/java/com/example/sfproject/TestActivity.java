@@ -32,46 +32,37 @@ import java.util.List;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import android.os.Bundle;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 public class TestActivity extends AppCompatActivity {
 
-    private FirebaseFirestore db;
-    private String uid = "ikZZTQIEEAetiZgPSFumXU1Cv3I3"; // 해당 유저의 UID로 교체
-    private String collectionName = "Profile"; // 컬렉션 이름으로 교체
 
-    private TextView Profile_follow_num;
-    private TextView Profile_following_num;
+    private TextView profileNameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Profile_follow_num = findViewById(R.id.textView_follow_num);
-        Profile_following_num = findViewById(R.id.textView_following_num);
+        profileNameTextView = findViewById(R.id.profile_name);
 
-        db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection(collectionName).document(uid);
+        // 현재 로그인한 사용자 가져오기
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        // 문서 데이터에서 필요한 값을 가져오기
-                        String follow_num = String.valueOf(document.getLong("follow"));
-                        String following_num = String.valueOf(document.getLong("following"));
-                        // 필요한 작업 수행
-                        Profile_follow_num.setText(follow_num);
-                        Profile_following_num.setText(following_num);
-                    } else {
-                        // 문서가 없는 경우 처리
-                    }
-                } else {
-                    // 오류 처리
-                }
-            }
-        });
+        if (currentUser != null) {
+            // 현재 사용자의 이메일 주소 가져오기
+            String userUID = currentUser.getUid();
+
+            // 이메일 주소를 TextView에 설정
+            profileNameTextView.setText(userUID);
+        } else {
+            // 사용자가 로그인되어 있지 않은 경우 또는 이메일 정보를 가져올 수 없는 경우
+            profileNameTextView.setText("로그인 정보 없음");
+        }
     }
 }
