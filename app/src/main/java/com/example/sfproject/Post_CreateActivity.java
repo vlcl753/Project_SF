@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +42,9 @@ public class Post_CreateActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private FirebaseFirestore db;
+
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String User_UID = currentUser.getUid();
 
     private SimpleDateFormat sdf =  new SimpleDateFormat("yyyy_MMdd_HHmm_ssSSS");
 
@@ -122,11 +127,45 @@ public class Post_CreateActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageData = baos.toByteArray();
 
+            if (index == 0) {
+                // 이미지를 저장할 경로 지정
+                StorageReference profileRef = storageRef.child("Profile/" + User_UID);
+
+                // 기존에 저장된 사진들 중 가장 큰 번호 찾기
+                profileRef.listAll()
+                        .addOnSuccessListener(listResult -> {
+                            int maxPhotoNum = -1;
+
+                            for (StorageReference item : listResult.getItems()) {
+                                String itemName = item.getName();
+                                if (itemName.startsWith("Profile_photo-")) {
+                                    // "Profile_photo-" 다음의 번호 파싱 (".jpg"를 제거하고 숫자로 변환)
+                                    String[] parts = itemName.split("-");
+                                    String numWithExtension = parts[1];
+                                    String[] numParts = numWithExtension.split("\\.");
+                                    int num = Integer.parseInt(numParts[0]);
+                                    maxPhotoNum = Math.max(maxPhotoNum, num);
+                                }
+                            }
+
+                            // 새로운 번호 계산
+                            int newPhotoNum = maxPhotoNum + 1;
+
+                            // 새로운 이미지를 저장할 경로 생성
+                            StorageReference newImageRef = profileRef.child("/Profile_photo-" + newPhotoNum + ".jpg");
+
+                            UploadTask uploadTask = newImageRef.putFile(imageUri);
+                        })
+                        .addOnFailureListener(e -> {
+                            // 오류 처리
+                        });
+            }
+
             StorageReference imageRef = storageRef.child("MainPost_images/" + formattedDate +"/  "+ documentName + ".jpg");
             UploadTask uploadTask = imageRef.putBytes(imageData);
 
             uploadTask.addOnSuccessListener(taskSnapshot -> {
-                // 이미지 업로드 성공 시 이미지 다운로드 URL을 가져오기
+
 
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     //String imageUrl = uri.toString();
@@ -138,7 +177,7 @@ public class Post_CreateActivity extends AppCompatActivity {
                     }
                 });
             }).addOnFailureListener(e -> {
-                // 이미지 업로드 실패 처리
+
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,16 +186,14 @@ public class Post_CreateActivity extends AppCompatActivity {
 
     private void saveDataToFirestore(String documentName, Map<String, Object> postData) {
         db.collection("Post")
-                .document(formattedDate) // 여기를 formattedDate로 수정하세요.
+                .document(formattedDate)
                 .set(postData)
                 .addOnSuccessListener(aVoid -> {
-                    // 성공적으로 저장되었을 때 처리
-                    // 예: Toast 메시지 또는 성공 다이얼로그 표시
+
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    // 저장 실패시 처리
-                    // 예: 오류 다이얼로그 표시
+
                 });
     }
 
@@ -167,7 +204,7 @@ public class Post_CreateActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {
-                // 여러 이미지 선택 시
+
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
@@ -175,7 +212,7 @@ public class Post_CreateActivity extends AppCompatActivity {
                     insertImageIntoEditText(imageUri);
                 }
             } else if (data.getData() != null) {
-                // 단일 이미지 선택 시
+
                 Uri imageUri = data.getData();
                 selectedImageUris.add(imageUri);
                 insertImageIntoEditText(imageUri);
