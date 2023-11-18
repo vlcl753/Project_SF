@@ -65,6 +65,21 @@ public class ProfileActivity extends AppCompatActivity {
         getTotalItemsCount();
 
 
+        ImageView imgLogout = findViewById(R.id.img_logout);
+
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 로그아웃 처리
+                FirebaseAuth.getInstance().signOut();
+
+                // 로그인 화면으로 이동 또는 필요한 다른 작업 수행
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish(); // 현재 액티비티 종료
+            }
+        });
+
         Profile_follow_num = findViewById(R.id.textView_follow_num);
         Profile_following_num = findViewById(R.id.textView_following_num);
 

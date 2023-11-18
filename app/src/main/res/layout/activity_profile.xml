@@ -26,6 +26,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageView
+        android:id="@+id/img_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="22dp"
+        android:onClick="img_logout_click"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings" />
 
 
 
@@ -61,6 +71,8 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:orientation="vertical">
+
+
 
             <!-- ScrollView 내부에 추가할 스크롤 가능한 뷰들을 이곳에 배치합니다 -->
 

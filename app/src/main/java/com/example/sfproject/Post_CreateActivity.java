@@ -41,6 +41,11 @@ public class Post_CreateActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseFirestore db;
 
+    private SimpleDateFormat sdf =  new SimpleDateFormat("yyyy_MMdd_HHmm_ssSSS");
+
+    // final String formattedDate = sdf.format(new Date());
+    public String formattedDate;
+
     public void goToMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -50,6 +55,13 @@ public class Post_CreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
+
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 한국 시간대로 설정
+        formattedDate = sdf.format(new Date());
+
+//        sdf = new SimpleDateFormat("yyyy_MMdd_HHmm_ssSSS");
+  //      sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
 
         FirebaseApp.initializeApp(this);
         storage = FirebaseStorage.getInstance();
@@ -79,6 +91,7 @@ public class Post_CreateActivity extends AppCompatActivity {
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String title = titleEditText.getText().toString();
                 String content = contentEditText.getText().toString();
                 Map<String, Object> data = new HashMap<>();
@@ -100,8 +113,7 @@ public class Post_CreateActivity extends AppCompatActivity {
     }
 
     private void uploadImageToStorage(Uri imageUri, final int index, final Map<String, Object> postData) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MMdd_HHmm_ssSSS");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
         final String documentName = "MainPost-" + sdf.format(new Date()) + "-" + index;
 
         try {
@@ -110,18 +122,19 @@ public class Post_CreateActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageData = baos.toByteArray();
 
-            StorageReference imageRef = storageRef.child("MainPost_images/" + "Post-1/  "+ documentName + ".jpg");
+            StorageReference imageRef = storageRef.child("MainPost_images/" + formattedDate +"/  "+ documentName + ".jpg");
             UploadTask uploadTask = imageRef.putBytes(imageData);
 
             uploadTask.addOnSuccessListener(taskSnapshot -> {
                 // 이미지 업로드 성공 시 이미지 다운로드 URL을 가져오기
+
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String imageUrl = uri.toString();
-                    postData.put("imageUrl(" + (index + 1) + ")", imageUrl);
+                    //String imageUrl = uri.toString();
+                    //postData.put("imageUrl(" + (index + 1) + ")", imageUrl);
 
                     if (index == selectedImageUris.size() - 1) {
                         // 마지막 이미지까지 업로드되었으면 Firestore에 데이터 저장
-                        saveDataToFirestore(documentName, postData);
+                        saveDataToFirestore(formattedDate, postData);
                     }
                 });
             }).addOnFailureListener(e -> {
@@ -134,7 +147,7 @@ public class Post_CreateActivity extends AppCompatActivity {
 
     private void saveDataToFirestore(String documentName, Map<String, Object> postData) {
         db.collection("Post")
-                .document(documentName)
+                .document(formattedDate) // 여기를 formattedDate로 수정하세요.
                 .set(postData)
                 .addOnSuccessListener(aVoid -> {
                     // 성공적으로 저장되었을 때 처리
@@ -146,6 +159,7 @@ public class Post_CreateActivity extends AppCompatActivity {
                     // 예: 오류 다이얼로그 표시
                 });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
