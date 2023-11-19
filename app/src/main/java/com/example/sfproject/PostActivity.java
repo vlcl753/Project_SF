@@ -67,6 +67,10 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        currentUserId = FirebaseAuth.getInstance().getUid();
+
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 한국 시간대로 설정
         formattedDate = sdf.format(new Date());
 
@@ -101,10 +105,12 @@ public class PostActivity extends AppCompatActivity {
 
     private void addCommentToFirestore() {
         String commentContent = editTextComment.getText().toString().trim();
+        String uname = firebaseUser.getDisplayName();
+        String uimg = firebaseUser.getPhotoUrl().toString();
 
         if (!commentContent.isEmpty()) {
             // Comment 객체 생성
-            Comment comment = new Comment(commentContent, currentUserId, "유저 프로필사진 URL", "유저 이름");
+            Comment comment = new Comment(commentContent, currentUserId, "유저 프로필사진 URL", uname);
 
             // Firestore에 댓글 추가
             firebaseFirestore.collection("comments")
