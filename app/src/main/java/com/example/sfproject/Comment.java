@@ -1,31 +1,23 @@
 package com.example.sfproject;
 
-import com.google.firebase.database.ServerValue;
+import com.google.firebase.Timestamp;
 
 public class Comment {
 
-    private String content,uid,uimg,uname;
-    private Object timestamp;
+    private String content, uid, uimg, uname;
+    private Timestamp timestamp;
 
-
+    // 기본 생성자
     public Comment() {
     }
 
+    // 생성자
     public Comment(String content, String uid, String uimg, String uname) {
         this.content = content;
         this.uid = uid;
         this.uimg = uimg;
         this.uname = uname;
-        this.timestamp = ServerValue.TIMESTAMP;
-
-    }
-
-    public Comment(String content, String uid, String uimg, String uname, Object timestamp) {
-        this.content = content;
-        this.uid = uid;
-        this.uimg = uimg;
-        this.uname = uname;
-        this.timestamp = timestamp;
+        this.timestamp = Timestamp.now(); // Firestore에서 제공하는 Timestamp 사용
     }
 
     public String getContent() {
@@ -60,11 +52,11 @@ public class Comment {
         this.uname = uname;
     }
 
-    public Object getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Object timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
 }
