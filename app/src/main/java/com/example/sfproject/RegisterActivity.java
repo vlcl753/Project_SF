@@ -78,11 +78,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (user != null) {
                                             userId = user.getUid();
 
-                                            StorageReference imageRef = mStorageRef.child("profile_images/" + userId + ".jpg");
-                                            imageRef.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            // userId 디렉터리 생성
+                                            StorageReference userStorageRef = mStorageRef.child("profile_images/" + userId + "/Profile_Photo.jpg");
+                                            userStorageRef.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    userStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
                                                             UserAccount account = new UserAccount();
@@ -91,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                             account.setPassword(strPwd);
                                                             account.setName(strName);
                                                             account.setProfileImageUrl(uri.toString());
+                                                            account.setReport(0);
 
                                                             mFirestore.collection("Profile").document(userId)
                                                                     .set(account)
@@ -141,3 +143,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 }
+

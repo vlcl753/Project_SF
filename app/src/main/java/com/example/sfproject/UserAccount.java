@@ -6,7 +6,7 @@ public class UserAccount {
     private String password;
     private String name;
     private String profileImageUrl; // 프로필 이미지 URL 추가
-
+    private int report;
     public UserAccount() {
         // 기본 생성자가 필요합니다.
     }
@@ -49,5 +49,14 @@ public class UserAccount {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+
+    public int getReport() {
+        return report;
+    }
+
+    public void setReport(int report) {
+        this.report = report;
     }
 }
