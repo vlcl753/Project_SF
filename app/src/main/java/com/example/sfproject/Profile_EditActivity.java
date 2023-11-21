@@ -36,7 +36,7 @@ public class Profile_EditActivity extends AppCompatActivity {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String User_UID = currentUser.getUid();
 
-    private String imagePath = "/Profile/" + User_UID + "/Profile_photo.jpg" ;
+    private String imagePath = "/Profile/" + User_UID + "/Profile_Photo.jpg" ;
     private Uri selectedImageUri;
 
     @Override
@@ -136,7 +136,7 @@ public class Profile_EditActivity extends AppCompatActivity {
         newImageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     newImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        profileRef.update("image_url", uri.toString())
+                        profileRef.update("profileImageUrl", uri.toString())
                                 .addOnCompleteListener(this, task -> {
                                     if (task.isSuccessful()) {
                                         updateNicknameOnly(newNickname); // 닉네임 업데이트

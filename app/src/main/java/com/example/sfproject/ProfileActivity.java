@@ -49,6 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String USER_UID = currentUser.getUid();
 
+    //String USER_UID ="teESJRTiV1Z7wO5eoA7SUkyI5U83";
+
     private TextView Profile_follow_num;
     private TextView Profile_following_num;
 
@@ -119,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
         loadUserName();
         // Firebase Storage에서 이미지 로드
         ImageView imgProfile = findViewById(R.id.img_profile);
-        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
         ImageView imgReport = findViewById(R.id.img_report);
         imgReport.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // 프로필 이미지 다시 불러오기
         ImageView imgProfile = findViewById(R.id.img_profile);
-        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
         // 기타 데이터를 다시 불러오는 작업을 추가할 수 있습니다.
         // 예를 들어, 사용자의 다른 정보를 불러올 수 있습니다.
