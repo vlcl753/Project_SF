@@ -175,11 +175,9 @@ public class Post_CreateActivity extends AppCompatActivity {
 
 
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    //String imageUrl = uri.toString();
-                    //postData.put("imageUrl(" + (index + 1) + ")", imageUrl);
-
                     if (index == selectedImageUris.size() - 1) {
-                        // 마지막 이미지까지 업로드되었으면 Firestore에 데이터 저장
+                        String imageUrl = uri.toString();
+                        postData.put("URL(1)", imageUrl);
                         saveDataToFirestore(formattedDate, postData);
                     }
                 });
