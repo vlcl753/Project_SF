@@ -15,12 +15,19 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,6 +43,8 @@ import java.util.TimeZone;
 
 public class Post_CreateActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private int Post_length;
+
     private Button customButton, regButton , customButton_popup;
     private EditText titleEditText, contentEditText;
     private List<Uri> selectedImageUris = new ArrayList<>();
@@ -128,10 +137,10 @@ public class Post_CreateActivity extends AppCompatActivity {
             byte[] imageData = baos.toByteArray();
 
             if (index == 0) {
-                // 이미지를 저장할 경로 지정
+
                 StorageReference profileRef = storageRef.child("Profile/" + User_UID);
 
-                // 기존에 저장된 사진들 중 가장 큰 번호 찾기
+
                 profileRef.listAll()
                         .addOnSuccessListener(listResult -> {
                             int maxPhotoNum = -1;
@@ -139,7 +148,6 @@ public class Post_CreateActivity extends AppCompatActivity {
                             for (StorageReference item : listResult.getItems()) {
                                 String itemName = item.getName();
                                 if (itemName.startsWith("Profile_photo-")) {
-                                    // "Profile_photo-" 다음의 번호 파싱 (".jpg"를 제거하고 숫자로 변환)
                                     String[] parts = itemName.split("-");
                                     String numWithExtension = parts[1];
                                     String[] numParts = numWithExtension.split("\\.");
@@ -148,16 +156,15 @@ public class Post_CreateActivity extends AppCompatActivity {
                                 }
                             }
 
-                            // 새로운 번호 계산
+
                             int newPhotoNum = maxPhotoNum + 1;
 
-                            // 새로운 이미지를 저장할 경로 생성
+
                             StorageReference newImageRef = profileRef.child("/Profile_photo-" + newPhotoNum + ".jpg");
 
                             UploadTask uploadTask = newImageRef.putFile(imageUri);
                         })
                         .addOnFailureListener(e -> {
-                            // 오류 처리
                         });
             }
 
@@ -168,11 +175,9 @@ public class Post_CreateActivity extends AppCompatActivity {
 
 
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    //String imageUrl = uri.toString();
-                    //postData.put("imageUrl(" + (index + 1) + ")", imageUrl);
-
                     if (index == selectedImageUris.size() - 1) {
-                        // 마지막 이미지까지 업로드되었으면 Firestore에 데이터 저장
+                        String imageUrl = uri.toString();
+                        postData.put("URL(1)", imageUrl);
                         saveDataToFirestore(formattedDate, postData);
                     }
                 });
@@ -185,20 +190,67 @@ public class Post_CreateActivity extends AppCompatActivity {
     }
 
     private void saveDataToFirestore(String documentName, Map<String, Object> postData) {
-
         postData.put("Writer_User", User_UID);
 
-        db.collection("Post")
-                .document(formattedDate)
-                .set(postData)
-                .addOnSuccessListener(aVoid -> {
+        Map<String, Object> timestamp = new HashMap<>();
+        timestamp.put("timestamp", FieldValue.serverTimestamp());
+        postData.put("Date", FieldValue.serverTimestamp());
 
-                    finish();
-                })
-                .addOnFailureListener(e -> {
+        CollectionReference postCollectionRef = db.collection("Post");
 
+        postCollectionRef.orderBy("Post_Key", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            String latestPostKey = querySnapshot.getDocuments().get(0).getString("Post_Key");
+                            if (latestPostKey != null && latestPostKey.startsWith("Post_")) {
+                                String numericPart = latestPostKey.replace("Post_", "");
+                                try {
+                                    int postKey = Integer.parseInt(numericPart) + 1;
+
+                                    postData.put("Post_Key", "Post_"+postKey);
+                                    System.out.println("가져온 Post_Key: " + "Post_"+postKey);
+
+                                    db.collection("Post")
+                                            .document(formattedDate)
+                                            .set(postData)
+                                            .addOnSuccessListener(aVoid -> {
+                                                finish();
+                                            })
+                                            .addOnFailureListener(e -> {
+
+                                            });
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+
+                            postData.put("Post_Key", -1);
+                            System.out.println("컬렉션에 데이터 없음, Post_Key를 -1로 초기화");
+
+                            // 여기서 데이터를 Firestore에 저장
+                            db.collection("Post")
+                                    .document(formattedDate)
+                                    .set(postData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+
+                                    });
+                        }
+                    } else {
+                        System.out.println("데이터를 가져오는 데 실패했습니다." + task.getException());
+                    }
                 });
     }
+
+
+
 
 
     @Override
