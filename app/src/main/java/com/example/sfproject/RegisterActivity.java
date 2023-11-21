@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             userId = user.getUid();
 
                                             // userId 디렉터리 생성
-                                            StorageReference userStorageRef = mStorageRef.child("profile_images/" + userId + "/Profile_Photo.jpg");
+                                            StorageReference userStorageRef = mStorageRef.child("Profile/" + userId + "/Profile_Photo.jpg");
                                             userStorageRef.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

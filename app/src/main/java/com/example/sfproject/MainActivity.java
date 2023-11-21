@@ -29,6 +29,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -126,39 +128,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // Update UI with posts and profile information
     private void updateUIWithNumberOfPosts(int numOfPosts, QuerySnapshot querySnapshot) {
         LinearLayout mainPostsLayout = findViewById(R.id.mainPosts);
-        boolean isLastSingle = numOfPosts % 2 != 0; // 마지막 게시물이 한 개인지 여부 확인
+        boolean isLastSingle = numOfPosts % 2 != 0; // Check if the last post is single
 
         int iterations = isLastSingle ? (numOfPosts - 1) : numOfPosts;
 
         for (int i = 0; i < iterations; i += 2) {
             LinearLayout rowLayout = createRowLayout();
 
-            // 1번째 게시물 (왼쪽)
+            // 1st post (left)
             if (i < querySnapshot.size()) {
-                // Firestore에서 데이터 가져오기
-                String profilePhotoUrl = querySnapshot.getDocuments().get(i).getString("Profile_photo");
-                String uName = querySnapshot.getDocuments().get(i).getString("uName");
-                String contentImageUrl = querySnapshot.getDocuments().get(i).getString("URL(1)");
-                String title = querySnapshot.getDocuments().get(i).getString("title");
-
-                LinearLayout columnLayoutLeft = createColumnLayout(profilePhotoUrl, uName, contentImageUrl, title);
-                rowLayout.addView(columnLayoutLeft);
+                String writeUID = querySnapshot.getDocuments().get(i).getString("Write_UID");
+                fetchProfileDataAndUpdateUI(writeUID, i, querySnapshot, rowLayout);
             }
 
-            // 2번째 게시물 (오른쪽)
+            // 2nd post (right)
             if (i + 1 < querySnapshot.size()) {
-                // Firestore에서 데이터 가져오기
-                String profilePhotoUrl = querySnapshot.getDocuments().get(i + 1).getString("Profile_photo");
-                String uName = querySnapshot.getDocuments().get(i + 1).getString("uName");
-                String contentImageUrl = querySnapshot.getDocuments().get(i + 1).getString("URL(1)");
-                String title = querySnapshot.getDocuments().get(i + 1).getString("title");
-
-                LinearLayout columnLayoutRight = createColumnLayout(profilePhotoUrl, uName, contentImageUrl, title);
-                rowLayout.addView(columnLayoutRight);
+                String writeUID = querySnapshot.getDocuments().get(i + 1).getString("Write_UID");
+                fetchProfileDataAndUpdateUI(writeUID, i + 1, querySnapshot, rowLayout);
             } else if (i + 1 == querySnapshot.size() && isLastSingle) {
-                // 마지막 게시물이 한 개이고, 현재가 마지막 행인 경우 우측에 빈 칸 추가
                 LinearLayout emptyColumnLayout = createEmptyColumnLayout();
                 rowLayout.addView(emptyColumnLayout);
             }
@@ -166,7 +156,40 @@ public class MainActivity extends AppCompatActivity {
             mainPostsLayout.addView(rowLayout);
         }
     }
-    // 이미지 슬라이드 설정
+
+    // Fetch profile data and update UI
+    private void fetchProfileDataAndUpdateUI(String write_UID, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
+        if (write_UID != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference profileRef = db.collection("Profile").document(write_UID);
+
+            profileRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            String profileImageUrl = document.getString("profileImageUrl");
+                            String name = document.getString("name");
+
+                            String contentImageUrl = querySnapshot.getDocuments().get(postIndex).getString("URL(1)");
+                            String title = querySnapshot.getDocuments().get(postIndex).getString("title");
+
+                            LinearLayout columnLayout = createColumnLayout(profileImageUrl, name, contentImageUrl, title);
+                            rowLayout.addView(columnLayout);
+                        }
+                    } else {
+                        Log.d(TAG, "Error fetching profile data: ", task.getException());
+                    }
+                }
+            });
+        } else {
+            Log.d(TAG, "Writer UID is null");
+        }
+    }
+
+
+
 
 
     // 좌우 컬럼 레이아웃 생성
