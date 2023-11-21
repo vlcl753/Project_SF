@@ -31,7 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
@@ -105,32 +107,44 @@ public class PostActivity extends AppCompatActivity {
 
     private void addCommentToFirestore() {
         String commentContent = editTextComment.getText().toString().trim();
-        String uname = firebaseUser.getDisplayName();
-        String uimg = firebaseUser.getPhotoUrl().toString();
 
-        if (!commentContent.isEmpty()) {
-            // Comment 객체 생성
-            Comment comment = new Comment(commentContent, currentUserId, "유저 프로필사진 URL", uname);
+        // firebaseUser가 null이 아닌지 확인
+        if (firebaseUser != null && !commentContent.isEmpty()) {
+            String uid = firebaseUser.getUid();
 
-            // Firestore에 댓글 추가
-            firebaseFirestore.collection("comments")
-                    .add(comment)
-                    .addOnSuccessListener(new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-                            // 댓글 추가 성공 시
-                            editTextComment.setText(""); // 입력란 초기화
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // 댓글 추가 실패 시
-                            // 실패 처리를 원하는대로 구현
+            // Profile 컬렉션에서 idToken과 일치하는 문서 가져오기
+            firebaseFirestore.collection("Profile")
+                    .whereEqualTo("idToken", uid)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String uname = document.getString("name");
+                                String uimg = document.getString("profileImageUrl");
+
+                                // Comment 객체 생성
+                                Comment comment = new Comment(commentContent, uid, uimg, uname);
+
+                                // Firestore에 댓글 추가
+                                firebaseFirestore.collection("comments")
+                                        .add(comment)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // 댓글 추가 성공 시
+                                            editTextComment.setText(""); // 입력란 초기화
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // 댓글 추가 실패 시
+                                            // 실패 처리를 원하는대로 구현
+                                        });
+                            }
+                        } else {
+                            // Profile 컬렉션에서 데이터 가져오기 실패
                         }
                     });
         }
     }
+
+
 
 
     public void goToMainActivity(View view) {
