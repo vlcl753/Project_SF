@@ -118,13 +118,13 @@
                 app:cardElevation="0dp">
                 <!-- 게시물 레이아웃-->
                 <LinearLayout
+                    android:id="@+id/post_LL"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
                     android:orientation="vertical">
 
                     <TextView
-                        android:textSize="12sp"
                         android:id="@+id/postDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -133,6 +133,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
+                        android:textSize="12sp"
                         tools:text="2023 nov 11" />
 
                     <TextView
@@ -146,6 +147,7 @@
                         android:textStyle="bold" />
 
 
+                    <!--
                     <ImageView
                         android:id="@+id/postPic"
                         android:layout_width="match_parent"
@@ -159,12 +161,15 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:src="@drawable/sjg02" />
+
                     <ImageView
                         android:id="@+id/postPic3"
                         android:layout_width="match_parent"
                         android:layout_height="450dp"
                         android:gravity="center"
                         android:src="@drawable/sjg03" />
+                        -->
+
 
                     <TextView
                         android:id="@+id/postContent"

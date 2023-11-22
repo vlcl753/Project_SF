@@ -1,17 +1,21 @@
 package com.example.sfproject;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +64,7 @@ import com.google.firebase.storage.StorageReference;
 public class PostActivity extends AppCompatActivity {
 
     ImageView postPic, postPic2, postPic3, imgProfile;
-    TextView txtPostContent, txtPostDate, txtPostTitle, txtPostName;
+    TextView txtPostContent, txtPostDate, txtPostTitle, txtPostName, postContent;
 
     EditText editTextComment;
     Button btnAddComment;
@@ -87,6 +91,15 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        LinearLayout postLinearLayout = findViewById(R.id.post_LL);
+
+        // 위에서 정의한 createImageView() 메소드를 사용하여 ImageView를 생성합니다.
+        ImageView imageView = createImageView(this);
+
+        // 생성된 ImageView를 post_LL이라는 LinearLayout에 추가합니다.
+        postLinearLayout.addView(imageView);
+
 
         Log.d("TAG", "실행");
 
@@ -167,9 +180,12 @@ public class PostActivity extends AppCompatActivity {
         txtPostName = findViewById(R.id.profile_name);
 
         imgProfile = findViewById(R.id.img_profile);
+        /*
         postPic = findViewById(R.id.postPic);
         postPic2 = findViewById(R.id.postPic2);
         postPic3 = findViewById(R.id.postPic3);
+
+         */
 
         /* 댓글 */
 
@@ -229,6 +245,21 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+    private ImageView createImageView(Context context) {
+        ImageView imageView = new ImageView(context);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500));
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageView.setImageResource(R.drawable.sjg01);
+        return imageView;
+    }
+
+
+
     private void loadFirebaseImage_profile(ImageView imageView, String imagePath) {
         // Firebase Storage에 있는 이미지의 StorageReference 가져오기
         StorageReference imageRef = storageRef.child(imagePath);
@@ -254,6 +285,11 @@ public class PostActivity extends AppCompatActivity {
 
 
     private void setPostTitleFromFirestore() {
+
+        postContent = findViewById(R.id.postContent);
+
+
+
         firestore.collection("Post")
                 .whereEqualTo("Post_Key", "Post_1")
                 .get()
@@ -261,6 +297,19 @@ public class PostActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         String postTitle = document.getString("title");
                         txtPostTitle.setText(postTitle); // postTitle TextView에 Title 설정
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("TAG", "Error getting documents", e);
+                });
+
+        firestore.collection("Post")
+                .whereEqualTo("Post_Key", "Post_1")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        String Contentpost = document.getString("content");
+                        postContent.setText(Contentpost);
                     }
                 })
                 .addOnFailureListener(e -> {
