@@ -98,6 +98,8 @@ public class PostActivity extends AppCompatActivity {
         loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
 
+        firestore = FirebaseFirestore.getInstance();
+        setPostTitleFromFirestore();
 
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("Post")
@@ -248,6 +250,26 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    private void setPostTitleFromFirestore() {
+        firestore.collection("Post")
+                .whereEqualTo("Post_Key", "Post_1")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        String postTitle = document.getString("title");
+                        txtPostTitle.setText(postTitle); // postTitle TextView에 Title 설정
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("TAG", "Error getting documents", e);
+                });
+    }
+
+
+
 
 
 
