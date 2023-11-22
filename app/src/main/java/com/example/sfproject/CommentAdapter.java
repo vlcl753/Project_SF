@@ -11,9 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.sfproject.Comment;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -43,25 +40,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.tvUsername.setText(comment.getUname());
         holder.tvCommentText.setText(comment.getContent());
 
-        // Timestamp를 날짜 형식으로 변환 (24시간 형식)
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String timestampString = dateFormat.format(comment.getTimestamp().toDate());
         holder.tvTimestamp.setText(timestampString);
 
-        // 프로필 사진 표시 (Glide 라이브러리 사용)
         if (comment.getUimg() != null && !comment.getUimg().isEmpty()) {
-            // 파이어베이스 스토리지에서 이미지 다운로드 및 표시
             Glide.with(context)
-                    .load(comment.getUimg()) // 이미지 다운로드 URL
+                    .load(comment.getUimg())
                     .circleCrop()
                     .placeholder(R.drawable.default_profile_image)
                     .error(R.drawable.default_profile_image)
                     .into(holder.ivProfile);
         } else {
-            // 프로필 이미지가 없는 경우 기본 이미지 표시
             holder.ivProfile.setImageResource(R.drawable.default_profile_image);
         }
-
     }
 
     @Override
@@ -84,4 +76,3 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 }
-
