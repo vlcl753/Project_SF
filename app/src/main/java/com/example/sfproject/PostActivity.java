@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
     EditText editTextComment;
     Button btnAddComment;
 
-    String PostKey ="Post_13";
+    String PostKey = null;
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -80,7 +80,7 @@ public class PostActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     List<Comment> commentList;
 
-    private String USER_UID="ikZZTQIEEAetiZgPSFumXU1Cv3I3";
+    private String USER_UID=null;
     private FirebaseFirestore firestore;
     private StorageReference storageRef;
     private FirebaseStorage storage;
@@ -93,19 +93,16 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        PostKey ="Post_13";
+
+
         LinearLayout postLinearLayout = findViewById(R.id.post_LL);
 
 
 
         Log.d("TAG", "실행");
 
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child("/Profile/" + USER_UID);
 
-
-        ImageView imgProfile = findViewById(R.id.img_profile);
-
-        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
 
         firestore = FirebaseFirestore.getInstance();
@@ -132,26 +129,37 @@ public class PostActivity extends AppCompatActivity {
                             Log.d("TAG", "문서 조회 실패");
                         }
 
+                        storage = FirebaseStorage.getInstance();
+                        storageRef = storage.getReference().child("/Profile/" + USER_UID);
+
+
+                        ImageView imgProfile = findViewById(R.id.img_profile);
+
+                        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
+
+                        firestore.collection("Profile")
+                                .document(USER_UID) // USER_UID에 해당하는 document 가져오기
+                                .get()
+                                .addOnSuccessListener(documentSnapshot -> {
+                                    if (documentSnapshot.exists()) {
+                                        String userName = documentSnapshot.getString("name");
+                                        txtPostName.setText(userName); // profile_name TextView에 이름 설정
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.d("TAG", "Error getting document", e);
+                                });
+
                         fetchAndDisplayImages();
                     }
                 });
 
 
 
-        firestore.collection("Profile")
-                .document(USER_UID) // USER_UID에 해당하는 document 가져오기
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String userName = documentSnapshot.getString("name");
-                        txtPostName.setText(userName); // profile_name TextView에 이름 설정
-                    } else {
-                        Log.d("TAG", "No such document");
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.d("TAG", "Error getting document", e);
-                });
+
+
 
 
 
