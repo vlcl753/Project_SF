@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,6 +46,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 
 public class PostActivity extends AppCompatActivity {
 
@@ -64,11 +73,39 @@ public class PostActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     List<Comment> commentList;
 
+    private FirebaseFirestore firestore;
+    String documentName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        Log.d("TAG", "실행");
+
+
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("Post")
+                .whereEqualTo("Post_Key", "Post_1")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // 해당하는 데이터가 있을 때의 처리
+                                documentName = document.getId(); // 문서의 이름(문서 ID) 가져오기
+                                Log.d("TAG", "Post_1을 가진 문서 이름: " + documentName);
+                                // 이후 해당 documentName을 사용할 수 있습니다.
+                            }
+                        } else {
+                            Log.d("TAG", "문서 조회 실패");
+                        }
+                    }
+                });
+
+
+        /* 댓글 */
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         currentUserId = FirebaseAuth.getInstance().getUid();
@@ -97,6 +134,8 @@ public class PostActivity extends AppCompatActivity {
         postPic2 = findViewById(R.id.postPic2);
         postPic3 = findViewById(R.id.postPic3);
 
+        /* 댓글 */
+
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +144,9 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+
+
+    /* 댓글 */
     private void addCommentToFirestore() {
         String commentContent = editTextComment.getText().toString().trim();
 
@@ -142,7 +184,11 @@ public class PostActivity extends AppCompatActivity {
                         }
                     });
         }
+
+        /* 댓글 */
+
     }
+
 
 
 
