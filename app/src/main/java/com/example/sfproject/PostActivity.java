@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
     EditText editTextComment;
     Button btnAddComment;
 
-    String PostKey ="Post_1";
+    String PostKey ="Post_13";
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -80,11 +80,12 @@ public class PostActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     List<Comment> commentList;
 
-    private String USER_UID="12qGDHfsKnPOtigLRr3rEmBooBo2";
+    private String USER_UID="ikZZTQIEEAetiZgPSFumXU1Cv3I3";
     private FirebaseFirestore firestore;
     private StorageReference storageRef;
     private FirebaseStorage storage;
 
+    private String documentID = null;
     private String userName;
 
     @Override
@@ -94,11 +95,6 @@ public class PostActivity extends AppCompatActivity {
 
         LinearLayout postLinearLayout = findViewById(R.id.post_LL);
 
-        // 위에서 정의한 createImageView() 메소드를 사용하여 ImageView를 생성합니다.
-        ImageView imageView = createImageView(this);
-
-        // 생성된 ImageView를 post_LL이라는 LinearLayout에 추가합니다.
-        postLinearLayout.addView(imageView);
 
 
         Log.d("TAG", "실행");
@@ -108,6 +104,7 @@ public class PostActivity extends AppCompatActivity {
 
 
         ImageView imgProfile = findViewById(R.id.img_profile);
+
         loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
 
@@ -116,26 +113,30 @@ public class PostActivity extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", "Post_1")
+                .whereEqualTo("Post_Key", PostKey)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // 해당하는 데이터가 있을 때의 처리
-                                PostKey = document.getId(); // 문서의 이름(문서 ID) 가져오기
-                                Log.d("TAG", "Post_1을 가진 문서 이름: " + PostKey);
-                                USER_UID = document.getString("Write_UID"); // Write_UID 필드의 데이터 가져오기
+                                documentID = document.getId(); // 문서의 이름(문서 ID) 가져오기
+                                USER_UID = document.getString("Writer_User"); // Write_UID 필드의 데이터 가져오기
                                 Log.d("TAG", "Post_1을 가진 문서의 Write_UID: " + USER_UID);
+                                Log.d("TAG", "Post_1을 가진 문서의 document : " + documentID);
 
                                 // 이후 해당 documentName을 사용할 수 있습니다.
                             }
+                            // documentID를 가져온 이후에 createImageView() 호출
                         } else {
                             Log.d("TAG", "문서 조회 실패");
                         }
+
+                        fetchAndDisplayImages();
                     }
                 });
+
+
 
         firestore.collection("Profile")
                 .document(USER_UID) // USER_UID에 해당하는 document 가져오기
@@ -233,7 +234,6 @@ public class PostActivity extends AppCompatActivity {
                                         });
                             }
                         } else {
-                            // Profile 컬렉션에서 데이터 가져오기 실패
                         }
                     });
         }
@@ -245,30 +245,55 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+    private void fetchAndDisplayImages() {
+        // Firebase Storage의 폴더에 대한 참조
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("MainPost_images/" + documentID);
 
+        // 해당 경로의 모든 파일 목록 가져오기
+        storageRef.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                // 각 이미지에 대한 다운로드 URL 가져오기
+                item.getDownloadUrl().addOnSuccessListener(uri -> {
+                    // 이미지를 나타내는 ImageView 생성
+                    ImageView imageView = new ImageView(PostActivity.this);
 
+                    // Glide 등을 사용하여 이미지 로드
+                    Glide.with(PostActivity.this)
+                            .load(uri)
+                            .into(imageView);
 
-
-
-    private ImageView createImageView(Context context) {
-        ImageView imageView = new ImageView(context);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setImageResource(R.drawable.sjg01);
-        return imageView;
+                    // 이미지를 post_LL 레이아웃에 추가
+                    LinearLayout postLinearLayout = findViewById(R.id.post_LL);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    layoutParams.setMargins(0, 0, 0, 20); // 이미지 간격 조정
+                    imageView.setLayoutParams(layoutParams);
+                    postLinearLayout.addView(imageView);
+                }).addOnFailureListener(exception -> {
+                    // 이미지 로드 실패 시 처리
+                    Log.e("ImageLoad", "(fetchAndDisplayImages) 이미지 로드 실패: " + exception.getMessage());
+                });
+            }
+        }).addOnFailureListener(exception -> {
+            // 파일 목록 가져오기 실패 시 처리
+            Log.e("FetchImages", "이미지 목록 가져오기 실패: " + exception.getMessage());
+        });
     }
 
 
 
+
+
+
     private void loadFirebaseImage_profile(ImageView imageView, String imagePath) {
-        // Firebase Storage에 있는 이미지의 StorageReference 가져오기
         StorageReference imageRef = storageRef.child(imagePath);
 
-        // 이미지의 다운로드 URL을 얻어오기
+
         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                // Glide를 사용하여 이미지 로드
                 Glide.with(PostActivity.this)
                         .load(uri)
                         .into(imageView);
@@ -277,7 +302,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // 이미지 로드 실패 시 처리
-                Log.e("ImageLoad", "이미지 로드 실패: " + e.getMessage());
+                Log.e("ImageLoad", "(loadFirebaseImage_profile)이미지 로드 실패: " + e.getMessage());
             }
         });
     }
@@ -291,7 +316,7 @@ public class PostActivity extends AppCompatActivity {
 
 
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", "Post_1")
+                .whereEqualTo("Post_Key", PostKey)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -304,7 +329,7 @@ public class PostActivity extends AppCompatActivity {
                 });
 
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", "Post_1")
+                .whereEqualTo("Post_Key", PostKey)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
