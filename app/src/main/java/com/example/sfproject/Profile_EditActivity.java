@@ -1,5 +1,6 @@
 package com.example.sfproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -75,6 +77,17 @@ public class Profile_EditActivity extends AppCompatActivity {
                 openGallery();
             }
         });
+
+
+        TextView profileDelTextView = findViewById(R.id.profile_del);
+
+        profileDelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //showPopup();
+            }
+        });
+
     }
 
     private void loadFirebaseImage_profile(ImageView imageView) {
@@ -154,4 +167,33 @@ public class Profile_EditActivity extends AppCompatActivity {
     public void no_click(View v) {
         finish();
     }
+
+    /*
+    private void showPopup() {
+        AlerwtDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("회원 탈퇴 하시겠습니까?");
+
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // OK를 눌렀을 때 할 일을 여기에 추가하세요.
+                // 예를 들어, 회원 탈퇴 처리 등을 수행할 수 있습니다.
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // CANCEL을 눌렀을 때 할 일을 여기에 추가하세요.
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+     */
 }
+
+
