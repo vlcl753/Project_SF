@@ -53,6 +53,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class PostActivity extends AppCompatActivity {
@@ -62,7 +64,8 @@ public class PostActivity extends AppCompatActivity {
 
     EditText editTextComment;
     Button btnAddComment;
-    String PostKey;
+
+    String PostKey ="Post_1";
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -73,8 +76,12 @@ public class PostActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     List<Comment> commentList;
 
+    private String USER_UID="12qGDHfsKnPOtigLRr3rEmBooBo2";
     private FirebaseFirestore firestore;
-    String documentName;
+    private StorageReference storageRef;
+    private FirebaseStorage storage;
+
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,14 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Log.d("TAG", "실행");
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child("/Profile/" + USER_UID);
+
+
+        ImageView imgProfile = findViewById(R.id.img_profile);
+        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
+
 
 
         firestore = FirebaseFirestore.getInstance();
@@ -94,8 +109,11 @@ public class PostActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // 해당하는 데이터가 있을 때의 처리
-                                documentName = document.getId(); // 문서의 이름(문서 ID) 가져오기
-                                Log.d("TAG", "Post_1을 가진 문서 이름: " + documentName);
+                                PostKey = document.getId(); // 문서의 이름(문서 ID) 가져오기
+                                Log.d("TAG", "Post_1을 가진 문서 이름: " + PostKey);
+                                USER_UID = document.getString("Write_UID"); // Write_UID 필드의 데이터 가져오기
+                                Log.d("TAG", "Post_1을 가진 문서의 Write_UID: " + USER_UID);
+
                                 // 이후 해당 documentName을 사용할 수 있습니다.
                             }
                         } else {
@@ -103,6 +121,23 @@ public class PostActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        firestore.collection("Profile")
+                .document(USER_UID) // USER_UID에 해당하는 document 가져오기
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String userName = documentSnapshot.getString("name");
+                        txtPostName.setText(userName); // profile_name TextView에 이름 설정
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("TAG", "Error getting document", e);
+                });
+
+
 
 
         /* 댓글 */
@@ -188,6 +223,37 @@ public class PostActivity extends AppCompatActivity {
         /* 댓글 */
 
     }
+
+
+
+
+    private void loadFirebaseImage_profile(ImageView imageView, String imagePath) {
+        // Firebase Storage에 있는 이미지의 StorageReference 가져오기
+        StorageReference imageRef = storageRef.child(imagePath);
+
+        // 이미지의 다운로드 URL을 얻어오기
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Glide를 사용하여 이미지 로드
+                Glide.with(PostActivity.this)
+                        .load(uri)
+                        .into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // 이미지 로드 실패 시 처리
+                Log.e("ImageLoad", "이미지 로드 실패: " + e.getMessage());
+            }
+        });
+    }
+
+
+
+
+
+
 
 
 
