@@ -249,6 +249,32 @@ public class Profile_EditActivity extends AppCompatActivity {
                         Log.e("Delete", "Error getting documents: ", task.getException());
                     }
                 });
+
+        String folderPath = "Profile/" + User_UID;
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
+
+        storageRef.listAll()
+                .addOnSuccessListener(listResult -> {
+                    for (StorageReference fileRef : listResult.getItems()) {
+                        fileRef.delete()
+                                .addOnSuccessListener(aVoid -> {
+
+                                    Log.d("DeleteFile", "파일 삭제 성공!");
+                                })
+                                .addOnFailureListener(e -> {
+
+                                    Log.e("DeleteFile", "파일 삭제 실패: " + e.getMessage());
+                                });
+                    }
+
+
+                })
+                .addOnFailureListener(e -> {
+
+                    Log.e("ListFiles", "파일 목록 가져오기 실패: " + e.getMessage());
+                });
+
     }
 
 
