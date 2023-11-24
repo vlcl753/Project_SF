@@ -46,6 +46,7 @@ public class Profile_EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
+
         ImageView imgProfile = findViewById(R.id.img_profile);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         imageRef = storageRef.child(imagePath);
@@ -84,7 +85,7 @@ public class Profile_EditActivity extends AppCompatActivity {
         profileDelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showPopup();
+                showPopup();
             }
         });
 
@@ -168,23 +169,37 @@ public class Profile_EditActivity extends AppCompatActivity {
         finish();
     }
 
-    /*
+
     private void showPopup() {
-        AlerwtDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("회원 탈퇴 하시겠습니까?");
 
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // OK를 눌렀을 때 할 일을 여기에 추가하세요.
-                // 예를 들어, 회원 탈퇴 처리 등을 수행할 수 있습니다.
+                deleteProfileAndPosts(User_UID);
+
+                FirebaseAuth.getInstance().signOut();
+
+                currentUser.delete()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("DeleteUser", "사용자 삭제 성공!");
+                            } else {
+                                Log.e("DeleteUser", "사용자 삭제 실패: " + task.getException().getMessage());
+                            }
+                        });
+
+                Intent intent = new Intent(Profile_EditActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
         alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // CANCEL을 눌렀을 때 할 일을 여기에 추가하세요.
+
             }
         });
 
@@ -193,7 +208,51 @@ public class Profile_EditActivity extends AppCompatActivity {
     }
 
 
-     */
+
+    private void deleteProfileAndPosts(String userUID) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("Profile").document(userUID)
+                .delete()
+                .addOnSuccessListener(aVoid -> Log.d("Delete", "프로필 문서 삭제 완료"))
+                .addOnFailureListener(e -> Log.e("Delete", "프로필 문서 삭제 실패: " + e.getMessage()));
+
+
+        db.collection("Post")
+                .whereEqualTo("Write_UID", userUID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("Post").document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> Log.d("Delete", "포스트 문서 삭제 완료"))
+                                    .addOnFailureListener(e -> Log.e("Delete", "포스트 문서 삭제 실패: " + e.getMessage()));
+                        }
+                    } else {
+                        Log.e("Delete", "Error getting documents: ", task.getException());
+                    }
+                });
+        db.collection("comments")
+                .whereEqualTo("uid", userUID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("comments").document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> Log.d("Delete", "코멘트 문서 삭제 완료"))
+                                    .addOnFailureListener(e -> Log.e("Delete", "코멘트 문서 삭제 실패: " + e.getMessage()));
+                        }
+                    } else {
+                        Log.e("Delete", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+
+
 }
 
 
