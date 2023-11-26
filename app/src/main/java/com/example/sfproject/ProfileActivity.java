@@ -319,13 +319,22 @@ public class ProfileActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 클릭 시 ProfileActivity로 이동하는 코드 추가
-                Intent intent = new Intent(ProfileActivity.this, Profile_EditActivity.class);
+                int imageNumber = extractImageNumber(imagePath);
+                Intent intent = new Intent(ProfileActivity.this, PostActivity.class);
+                intent.putExtra("IMAGE_NUMBER", imageNumber);
                 startActivity(intent);
             }
         });
 
         return cardView;
+    }
+
+    private int extractImageNumber(String imagePath) {
+        // 파일 이름에서 숫자 부분 추출
+        String[] parts = imagePath.split("-");
+        String numWithExtension = parts[1];
+        String[] numParts = numWithExtension.split("\\.");
+        return Integer.parseInt(numParts[0]);
     }
 
     private void loadFirebaseImage(ImageView imageView, String imagePath) {

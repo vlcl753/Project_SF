@@ -93,7 +93,17 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        PostKey ="Post_13";
+
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            int imageNumber = intent.getIntExtra("IMAGE_NUMBER", -1); // -1은 기본값, 값이 없을 때 반환될 값 설정
+            // 가져온 imageNumber를 PostKey 변수에 할당하거나 활용
+            PostKey = "Post_" + imageNumber; // 예시로 PostKey를 설정하는 방식
+            System.out.println("받아버렸다"+imageNumber);
+        }
+        
+        //PostKey ="Post_13";
 
 
         LinearLayout postLinearLayout = findViewById(R.id.post_LL);
@@ -377,8 +387,7 @@ public class PostActivity extends AppCompatActivity {
 
 
     public void goToMainActivity(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     public void openProfileActivity(View view) {
