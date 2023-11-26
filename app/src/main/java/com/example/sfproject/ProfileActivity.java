@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +35,7 @@ import com.google.firebase.storage.ListResult;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -53,11 +55,46 @@ public class ProfileActivity extends AppCompatActivity {
 
     private TextView Profile_follow_num;
     private TextView Profile_following_num;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigationview);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId(); // 아이템 ID를 가져옵니다.
+                // 아이템 ID에 따라 액티비티를 시작합니다.
+                int itemID = item.getItemId();
+                if (itemID == R.id.home) {
+                    // 홈 아이템을 클릭했을 때 MainActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                    finish();
+                } else if (itemID == R.id.add) {
+                    // 글쓰기 아이템을 클릭했을 때 Post_CreateActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, Post_CreateActivity.class));
+                    finish();
+                } else if (itemID == R.id.setting) {
+                    // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                    finish();
+                } else if (itemID == R.id.noti) {
+                    // 알람 아이템을 클릭했을 때 Notification으로 이동
+                    startActivity(new Intent(ProfileActivity.this, Notification.class));
+                    finish();
+                } else if (itemID == R.id.search) {
+                    // 설정 아이템을 클릭했을 때 Profile_SearchActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, SearchActivity.class));
+                    finish();
+                }
+
+                return false;
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference().child("/Profile/" + USER_UID);
