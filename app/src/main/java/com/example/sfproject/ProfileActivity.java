@@ -224,7 +224,6 @@ public class ProfileActivity extends AppCompatActivity {
                 if (index < imagePaths.size()) {
                     rowLayout.addView(createCardView_1(imagePaths.get(index)));
                 } else {
-                    // 이미지가 채워지지 않은 공간에 빈 CardView 추가
                     rowLayout.addView(createEmptyCardView());
                 }
             }
@@ -237,10 +236,10 @@ public class ProfileActivity extends AppCompatActivity {
         rootView.addView(cardView);
     }
 
-    private void getImagesFromStorage(int totalPosts) {
+    private void getImagesFromStorage(List<Integer> imageNumbers) {
         final List<String> imagePaths = new ArrayList<>();
-        for (int i = 1; i <= totalPosts; i++) {
-            imagePaths.add("Profile_photo-" + i + ".jpg");
+        for (int number : imageNumbers) {
+            imagePaths.add("Profile_photo-" + number + ".jpg");
         }
 
         createCardViews(imagePaths);
@@ -250,15 +249,24 @@ public class ProfileActivity extends AppCompatActivity {
         storageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
-                List<StorageReference> items = listResult.getItems();
-                int totalPosts = items.size();
-                Log.d("StorageItemCount", "데이터 갯수: " + totalPosts);
-                getImagesFromStorage(totalPosts);
+                List<Integer> imageNumbers = new ArrayList<>();
+                for (StorageReference item : listResult.getItems()) {
+                    String itemName = item.getName();
+                    if (itemName.startsWith("Profile_photo-")) {
+                        String[] parts = itemName.split("-");
+                        String numWithExtension = parts[1];
+                        String[] numParts = numWithExtension.split("\\.");
+                        int number = Integer.parseInt(numParts[0]);
+                        imageNumbers.add(number);
+                    }
+                }
+
+
+                getImagesFromStorage(imageNumbers);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                // 데이터 갯수 가져오기 실패 시 처리할 작업을 여기에 추가하세요.
             }
         });
     }
