@@ -117,14 +117,27 @@ public class PostActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 documentID = document.getId(); // 문서의 이름(문서 ID) 가져오기
                                 USER_UID = document.getString("Writer_User"); // Write_UID 필드의 데이터 가져오기
                                 Log.d("TAG", "Post_1을 가진 문서의 Write_UID: " + USER_UID);
                                 Log.d("TAG", "Post_1을 가진 문서의 document : " + documentID);
 
-                                // 이후 해당 documentName을 사용할 수 있습니다.
+                                Timestamp timestamp = document.getTimestamp("Date");
+                                if (timestamp != null) {
+                                    Date date = timestamp.toDate();
+
+                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                                    formatter.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 한국 시간대 설정
+                                    String formattedDate = formatter.format(date);
+
+                                    TextView postDate = findViewById(R.id.postDate);
+                                    postDate.setText(formattedDate);
+                                }
+                                Log.d("TAG", "Post_1을 가진 문서의 Date : " + formattedDate);
+
+
                             }
-                            // documentID를 가져온 이후에 createImageView() 호출
                         } else {
                             Log.d("TAG", "문서 조회 실패");
                         }
