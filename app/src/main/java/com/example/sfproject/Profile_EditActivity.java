@@ -179,6 +179,9 @@ public class Profile_EditActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 deleteProfileAndPosts(User_UID);
 
+                Log.d("DeleteUser", "여기까지!");
+                System.out.println("여기까지");
+
                 FirebaseAuth.getInstance().signOut();
 
                 currentUser.delete()
