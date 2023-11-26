@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sjg07"
+                    android:src="@drawable/sjg__"
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="openProfileActivity" />
@@ -104,7 +104,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
-                android:text="짱멋쟁이정기"
+                android:text="USER"
                 android:textStyle="bold"
                 android:textSize="16dp"
                 />
@@ -118,13 +118,13 @@
                 app:cardElevation="0dp">
                 <!-- 게시물 레이아웃-->
                 <LinearLayout
+                    android:id="@+id/post_LL"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
                     android:orientation="vertical">
 
                     <TextView
-                        android:textSize="12sp"
                         android:id="@+id/postDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -133,7 +133,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        tools:text="2023 nov 11" />
+                        android:textSize="12sp"
+                        tools:text="postDate" />
 
                     <TextView
                         android:id="@+id/postTitle"
@@ -141,11 +142,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:gravity="center"
-                        android:text="누가 꽃이게?"
+                        android:text="title"
                         android:textSize="30dp"
                         android:textStyle="bold" />
 
 
+                    <!--
                     <ImageView
                         android:id="@+id/postPic"
                         android:layout_width="match_parent"
@@ -159,12 +161,17 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:src="@drawable/sjg02" />
+
                     <ImageView
                         android:id="@+id/postPic3"
                         android:layout_width="match_parent"
                         android:layout_height="450dp"
                         android:gravity="center"
                         android:src="@drawable/sjg03" />
+                        -->
+
+
+
 
                     <TextView
                         android:id="@+id/postContent"
@@ -173,7 +180,7 @@
 
                         android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:text="미안하다.. 이거 보여주려고 꽃인 척 해봤다..\n날씨 좋던 봄에 입은 룩입니다!\n 상의는 연두색 셔츠, 하의는 베이지색 와이드 카고팬츠로\n톤온톤 코디를 해보았습니다!"
+                        android:text=" content "
                         android:textSize="16sp" />
 
 

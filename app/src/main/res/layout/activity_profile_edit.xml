@@ -143,6 +143,20 @@
 
 
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/profile_del"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_horizontal"
+            android:text="회원 탈퇴"
+            android:textColor="#FF0000"
+            android:textSize="18dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

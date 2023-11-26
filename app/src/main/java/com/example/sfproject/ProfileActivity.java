@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +35,7 @@ import com.google.firebase.storage.ListResult;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -49,13 +51,50 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String USER_UID = currentUser.getUid();
 
+    //String USER_UID ="teESJRTiV1Z7wO5eoA7SUkyI5U83";
+
     private TextView Profile_follow_num;
     private TextView Profile_following_num;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigationview);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId(); // 아이템 ID를 가져옵니다.
+                // 아이템 ID에 따라 액티비티를 시작합니다.
+                int itemID = item.getItemId();
+                if (itemID == R.id.home) {
+                    // 홈 아이템을 클릭했을 때 MainActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                    finish();
+                } else if (itemID == R.id.add) {
+                    // 글쓰기 아이템을 클릭했을 때 Post_CreateActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, Post_CreateActivity.class));
+                    finish();
+                } else if (itemID == R.id.setting) {
+                    // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                    finish();
+                } else if (itemID == R.id.noti) {
+                    // 알람 아이템을 클릭했을 때 Notification으로 이동
+                    startActivity(new Intent(ProfileActivity.this, Notification.class));
+                    finish();
+                } else if (itemID == R.id.search) {
+                    // 설정 아이템을 클릭했을 때 Profile_SearchActivity로 이동
+                    startActivity(new Intent(ProfileActivity.this, SearchActivity.class));
+                    finish();
+                }
+
+                return false;
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference().child("/Profile/" + USER_UID);
@@ -119,7 +158,7 @@ public class ProfileActivity extends AppCompatActivity {
         loadUserName();
         // Firebase Storage에서 이미지 로드
         ImageView imgProfile = findViewById(R.id.img_profile);
-        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
         ImageView imgReport = findViewById(R.id.img_report);
         imgReport.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +183,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // 프로필 이미지 다시 불러오기
         ImageView imgProfile = findViewById(R.id.img_profile);
-        loadFirebaseImage_profile(imgProfile, "Profile_photo.jpg");
+        loadFirebaseImage_profile(imgProfile, "Profile_Photo.jpg");
 
         // 기타 데이터를 다시 불러오는 작업을 추가할 수 있습니다.
         // 예를 들어, 사용자의 다른 정보를 불러올 수 있습니다.
@@ -222,7 +261,6 @@ public class ProfileActivity extends AppCompatActivity {
                 if (index < imagePaths.size()) {
                     rowLayout.addView(createCardView_1(imagePaths.get(index)));
                 } else {
-                    // 이미지가 채워지지 않은 공간에 빈 CardView 추가
                     rowLayout.addView(createEmptyCardView());
                 }
             }
@@ -235,10 +273,10 @@ public class ProfileActivity extends AppCompatActivity {
         rootView.addView(cardView);
     }
 
-    private void getImagesFromStorage(int totalPosts) {
+    private void getImagesFromStorage(List<Integer> imageNumbers) {
         final List<String> imagePaths = new ArrayList<>();
-        for (int i = 1; i <= totalPosts; i++) {
-            imagePaths.add("Profile_photo-" + i + ".jpg");
+        for (int number : imageNumbers) {
+            imagePaths.add("Profile_photo-" + number + ".jpg");
         }
 
         createCardViews(imagePaths);
@@ -248,15 +286,24 @@ public class ProfileActivity extends AppCompatActivity {
         storageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
-                List<StorageReference> items = listResult.getItems();
-                int totalPosts = items.size();
-                Log.d("StorageItemCount", "데이터 갯수: " + totalPosts);
-                getImagesFromStorage(totalPosts);
+                List<Integer> imageNumbers = new ArrayList<>();
+                for (StorageReference item : listResult.getItems()) {
+                    String itemName = item.getName();
+                    if (itemName.startsWith("Profile_photo-")) {
+                        String[] parts = itemName.split("-");
+                        String numWithExtension = parts[1];
+                        String[] numParts = numWithExtension.split("\\.");
+                        int number = Integer.parseInt(numParts[0]);
+                        imageNumbers.add(number);
+                    }
+                }
+
+
+                getImagesFromStorage(imageNumbers);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                // 데이터 갯수 가져오기 실패 시 처리할 작업을 여기에 추가하세요.
             }
         });
     }
@@ -309,13 +356,22 @@ public class ProfileActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 클릭 시 ProfileActivity로 이동하는 코드 추가
-                Intent intent = new Intent(ProfileActivity.this, Profile_EditActivity.class);
+                int imageNumber = extractImageNumber(imagePath);
+                Intent intent = new Intent(ProfileActivity.this, PostActivity.class);
+                intent.putExtra("IMAGE_NUMBER", imageNumber);
                 startActivity(intent);
             }
         });
 
         return cardView;
+    }
+
+    private int extractImageNumber(String imagePath) {
+        // 파일 이름에서 숫자 부분 추출
+        String[] parts = imagePath.split("-");
+        String numWithExtension = parts[1];
+        String[] numParts = numWithExtension.split("\\.");
+        return Integer.parseInt(numParts[0]);
     }
 
     private void loadFirebaseImage(ImageView imageView, String imagePath) {

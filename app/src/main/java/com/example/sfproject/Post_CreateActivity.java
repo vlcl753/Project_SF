@@ -60,6 +60,15 @@ public class Post_CreateActivity extends AppCompatActivity {
     // final String formattedDate = sdf.format(new Date());
     public String formattedDate;
 
+    private int POSTKEY = -1;
+
+    public int getpostKey(){
+        return POSTKEY;
+    }
+    public void setpostKey(int POSTKEY){
+        this.POSTKEY = POSTKEY;
+    }
+
     public void goToMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -69,6 +78,7 @@ public class Post_CreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
+
 
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 한국 시간대로 설정
         formattedDate = sdf.format(new Date());
@@ -111,6 +121,8 @@ public class Post_CreateActivity extends AppCompatActivity {
                 Map<String, Object> data = new HashMap<>();
                 data.put("title", title);
                 data.put("content", content);
+
+                getPostKeyAndSaveData(data);
 
                 for (int i = 0; i < selectedImageUris.size(); i++) {
                     Uri imageUri = selectedImageUris.get(i);
@@ -158,9 +170,10 @@ public class Post_CreateActivity extends AppCompatActivity {
 
 
                             int newPhotoNum = maxPhotoNum + 1;
+                            int getpost = getpostKey();
+                            System.out.println("@@가져온 Post_Key: " + "Post_"+getpost);
 
-
-                            StorageReference newImageRef = profileRef.child("/Profile_photo-" + newPhotoNum + ".jpg");
+                            StorageReference newImageRef = profileRef.child("/Profile_photo-" + getpost + ".jpg");
 
                             UploadTask uploadTask = newImageRef.putFile(imageUri);
                         })
@@ -213,6 +226,8 @@ public class Post_CreateActivity extends AppCompatActivity {
 
                                     postData.put("Post_Key", "Post_"+postKey);
                                     System.out.println("가져온 Post_Key: " + "Post_"+postKey);
+                                    setpostKey(postKey);
+                                    System.out.println("@@가져온 Post_Key: " + getpostKey());
 
                                     db.collection("Post")
                                             .document(formattedDate)
@@ -249,6 +264,45 @@ public class Post_CreateActivity extends AppCompatActivity {
                 });
     }
 
+
+
+    private void getPostKeyAndSaveData(Map<String, Object> postData) {
+        CollectionReference postCollectionRef = db.collection("Post");
+
+        postCollectionRef.orderBy("Post_Key", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            String latestPostKey = querySnapshot.getDocuments().get(0).getString("Post_Key");
+                            if (latestPostKey != null && latestPostKey.startsWith("Post_")) {
+                                String numericPart = latestPostKey.replace("Post_", "");
+                                try {
+                                    int postKey = Integer.parseInt(numericPart) + 1;
+
+                                    postData.put("Post_Key", "Post_" + postKey);
+                                    System.out.println("가져온 게시물 키: " + "Post_" + postKey);
+                                    setpostKey(postKey);
+                                    System.out.println("@@가져온 게시물 키: " + getpostKey());
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+                            // 컬렉션에 데이터가 없는 경우 처리
+                            postData.put("Post_Key", -1);
+                            System.out.println("컬렉션에 데이터가 없어, 게시물 키를 -1로 초기화합니다.");
+
+                            // 여기서 Firestore에 데이터를 저장할 수 있습니다.
+                            // saveDataToFirestore(formattedDate, postData);
+                        }
+                    } else {
+                        System.out.println("데이터를 가져오는 데 실패했습니다." + task.getException());
+                    }
+                });
+    }
 
 
 

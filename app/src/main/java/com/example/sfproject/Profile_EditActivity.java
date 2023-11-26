@@ -1,5 +1,6 @@
 package com.example.sfproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -36,13 +38,14 @@ public class Profile_EditActivity extends AppCompatActivity {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String User_UID = currentUser.getUid();
 
-    private String imagePath = "/Profile/" + User_UID + "/Profile_photo.jpg" ;
+    private String imagePath = "/Profile/" + User_UID + "/Profile_Photo.jpg" ;
     private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
+
 
         ImageView imgProfile = findViewById(R.id.img_profile);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -75,6 +78,17 @@ public class Profile_EditActivity extends AppCompatActivity {
                 openGallery();
             }
         });
+
+
+        TextView profileDelTextView = findViewById(R.id.profile_del);
+
+        profileDelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup();
+            }
+        });
+
     }
 
     private void loadFirebaseImage_profile(ImageView imageView) {
@@ -136,7 +150,7 @@ public class Profile_EditActivity extends AppCompatActivity {
         newImageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     newImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        profileRef.update("image_url", uri.toString())
+                        profileRef.update("profileImageUrl", uri.toString())
                                 .addOnCompleteListener(this, task -> {
                                     if (task.isSuccessful()) {
                                         updateNicknameOnly(newNickname); // 닉네임 업데이트
@@ -154,4 +168,120 @@ public class Profile_EditActivity extends AppCompatActivity {
     public void no_click(View v) {
         finish();
     }
+
+
+    private void showPopup() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("회원 탈퇴 하시겠습니까?");
+
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteProfileAndPosts(User_UID);
+
+                Log.d("DeleteUser", "여기까지!");
+                System.out.println("여기까지");
+
+                FirebaseAuth.getInstance().signOut();
+
+                currentUser.delete()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("DeleteUser", "사용자 삭제 성공!");
+                            } else {
+                                Log.e("DeleteUser", "사용자 삭제 실패: " + task.getException().getMessage());
+                            }
+                        });
+
+                Intent intent = new Intent(Profile_EditActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+
+    private void deleteProfileAndPosts(String userUID) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("Profile").document(userUID)
+                .delete()
+                .addOnSuccessListener(aVoid -> Log.d("Delete", "프로필 문서 삭제 완료"))
+                .addOnFailureListener(e -> Log.e("Delete", "프로필 문서 삭제 실패: " + e.getMessage()));
+
+
+        db.collection("Post")
+                .whereEqualTo("Write_UID", userUID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("Post").document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> Log.d("Delete", "포스트 문서 삭제 완료"))
+                                    .addOnFailureListener(e -> Log.e("Delete", "포스트 문서 삭제 실패: " + e.getMessage()));
+                        }
+                    } else {
+                        Log.e("Delete", "Error getting documents: ", task.getException());
+                    }
+                });
+        db.collection("comments")
+                .whereEqualTo("uid", userUID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("comments").document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> Log.d("Delete", "코멘트 문서 삭제 완료"))
+                                    .addOnFailureListener(e -> Log.e("Delete", "코멘트 문서 삭제 실패: " + e.getMessage()));
+                        }
+                    } else {
+                        Log.e("Delete", "Error getting documents: ", task.getException());
+                    }
+                });
+
+        String folderPath = "Profile/" + User_UID;
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
+
+        storageRef.listAll()
+                .addOnSuccessListener(listResult -> {
+                    for (StorageReference fileRef : listResult.getItems()) {
+                        fileRef.delete()
+                                .addOnSuccessListener(aVoid -> {
+
+                                    Log.d("DeleteFile", "파일 삭제 성공!");
+                                })
+                                .addOnFailureListener(e -> {
+
+                                    Log.e("DeleteFile", "파일 삭제 실패: " + e.getMessage());
+                                });
+                    }
+
+
+                })
+                .addOnFailureListener(e -> {
+
+                    Log.e("ListFiles", "파일 목록 가져오기 실패: " + e.getMessage());
+                });
+
+    }
+
+
+
 }
+
+
