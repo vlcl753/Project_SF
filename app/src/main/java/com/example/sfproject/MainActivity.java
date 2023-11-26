@@ -140,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
 
             // 1st post (left)
             if (i < querySnapshot.size()) {
-                String writeUID = querySnapshot.getDocuments().get(i).getString("Write_UID");
+                String writeUID = querySnapshot.getDocuments().get(i).getString("Writer_User");
                 fetchProfileDataAndUpdateUI(writeUID, i, querySnapshot, rowLayout);
             }
 
             // 2nd post (right)
             if (i + 1 < querySnapshot.size()) {
-                String writeUID = querySnapshot.getDocuments().get(i + 1).getString("Write_UID");
+                String writeUID = querySnapshot.getDocuments().get(i + 1).getString("Writer_User");
                 fetchProfileDataAndUpdateUI(writeUID, i + 1, querySnapshot, rowLayout);
             } else if (i + 1 == querySnapshot.size() && isLastSingle) {
                 LinearLayout emptyColumnLayout = createEmptyColumnLayout();
