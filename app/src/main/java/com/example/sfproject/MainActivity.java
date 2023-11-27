@@ -23,6 +23,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
@@ -36,6 +38,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import android.view.MenuItem;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     // Firebase 데이터베이스 인스턴스를 가져옵니다.
@@ -170,12 +175,14 @@ public class MainActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document != null && document.exists()) {
                             String profileImageUrl = document.getString("profileImageUrl");
+
                             String name = document.getString("name");
 
                             String contentImageUrl = querySnapshot.getDocuments().get(postIndex).getString("URL(1)");
                             String title = querySnapshot.getDocuments().get(postIndex).getString("title");
+                            String postKey = querySnapshot.getDocuments().get(postIndex).getId();
 
-                            LinearLayout columnLayout = createColumnLayout(profileImageUrl, name, contentImageUrl, title);
+                            LinearLayout columnLayout = createColumnLayout(postKey, profileImageUrl, name, contentImageUrl, title);
                             rowLayout.addView(columnLayout);
                         }
                     } else {
@@ -213,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         return rowLayout;
     }
 
-    private LinearLayout createColumnLayout(String profileImageResource, String profileName,
+    private LinearLayout createColumnLayout(String postKey, String profileImageResource, String profileName,
                                             String contentImageResource, String contentTitle) {
         LinearLayout columnLayout = new LinearLayout(this);
         columnLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -222,15 +229,25 @@ public class MainActivity extends AppCompatActivity {
                 1));
         columnLayout.setOrientation(LinearLayout.VERTICAL);
 
-        LinearLayout postLayout = createPostLayout(contentImageResource, profileImageResource,
-                profileName, contentTitle);
+        LinearLayout postLayout = createPostLayout(postKey, contentImageResource, profileImageResource, profileName, contentTitle); // postKey 값을 createPostLayout로 전달
         columnLayout.addView(postLayout);
+
+        // 게시물 레이아웃 클릭 이벤트 핸들러 설정
+        columnLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 게시물을 클릭했을 때 PostActivity로 postKey 전달
+                Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                intent.putExtra("POST_KEY", postKey);
+                startActivity(intent);
+            }
+        });
 
         return columnLayout;
     }
 
     // 게시물 레이아웃 생성
-    private LinearLayout createPostLayout(String contentImageUrl, String profilePhotoUrl,
+    private LinearLayout createPostLayout(String postKey, String contentImageUrl, String profilePhotoUrl,
                                           String uName, String title) {
         LinearLayout postLayout = new LinearLayout(this);
         postLayout.setLayoutParams(new LinearLayout.LayoutParams(

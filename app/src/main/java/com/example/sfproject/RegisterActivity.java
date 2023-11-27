@@ -93,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                             account.setName(strName);
                                                             account.setProfileImageUrl(uri.toString());
                                                             account.setReport(0);
+                                                            account.setFlower(0);
+                                                            account.setFlowing(0);
 
                                                             mFirestore.collection("Profile").document(userId)
                                                                     .set(account)
