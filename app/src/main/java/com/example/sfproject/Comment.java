@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp;
 
 public class Comment {
 
-    private String content, uid, uimg, uname;
+    private String content, uid, uimg, uname, postKey;
     private Timestamp timestamp;
 
     // 기본 생성자
@@ -12,11 +12,12 @@ public class Comment {
     }
 
     // 생성자
-    public Comment(String content, String uid, String uimg, String uname) {
+    public Comment(String content, String uid, String uimg, String uname, String postKey) {
         this.content = content;
         this.uid = uid;
         this.uimg = uimg;
         this.uname = uname;
+        this.postKey = postKey;
         this.timestamp = Timestamp.now(); // Firestore에서 제공하는 Timestamp 사용
     }
 
@@ -50,6 +51,14 @@ public class Comment {
 
     public void setUname(String uname) {
         this.uname = uname;
+    }
+
+    public String getPostKey() {
+        return postKey;
+    }
+
+    public void setPostKey(String postKey) {
+        this.postKey = postKey;
     }
 
     public Timestamp getTimestamp() {

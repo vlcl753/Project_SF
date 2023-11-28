@@ -1,6 +1,7 @@
 package com.example.sfproject;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,8 +23,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private List<Comment> commentList;
     private Context context;
 
+    // 생성자 수정
     public CommentAdapter(List<Comment> commentList, Context context) {
-        this.commentList = commentList;
+        this.commentList = (commentList != null) ? commentList : new ArrayList<>();
         this.context = context;
     }
 
@@ -74,5 +77,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             tvTimestamp = itemView.findViewById(R.id.comment_date);
             ivProfile = itemView.findViewById(R.id.comment_user_img);
         }
+    }
+
+    // 이 부분에 setCommentList 메서드를 이동
+    public void setCommentList(List<Comment> commentList) {
+        if (commentList != null) {
+            this.commentList = commentList;
+        } else {
+            this.commentList = new ArrayList<>();
+        }
+        notifyDataSetChanged(); // 데이터가 변경되었음을 알림
+
+        Log.d("CommentAdapter", "setCommentList 호출됨. 데이터 크기: " + commentList.size());
     }
 }
