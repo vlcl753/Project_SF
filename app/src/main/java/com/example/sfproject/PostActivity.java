@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
     EditText editTextComment;
     Button btnAddComment;
 
-    String PostKey = null;
+
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -93,16 +93,17 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        String postKey = getIntent().getStringExtra("Post_Key");
 
 
         Intent intent = getIntent();
         if (intent != null) {
             int imageNumber = intent.getIntExtra("IMAGE_NUMBER", -1); // -1은 기본값, 값이 없을 때 반환될 값 설정
             // 가져온 imageNumber를 PostKey 변수에 할당하거나 활용
-            PostKey = "Post_" + imageNumber; // 예시로 PostKey를 설정하는 방식
+            postKey = "Post_" + imageNumber; // 예시로 PostKey를 설정하는 방식
             System.out.println("받아버렸다"+imageNumber);
         }
-        
+
         //PostKey ="Post_13";
 
 
@@ -116,11 +117,11 @@ public class PostActivity extends AppCompatActivity {
 
 
         firestore = FirebaseFirestore.getInstance();
-        setPostTitleFromFirestore();
+        setPostTitleFromFirestore(postKey);
 
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", PostKey)
+                .whereEqualTo("Post_Key", postKey)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -340,14 +341,11 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-    private void setPostTitleFromFirestore() {
-
+    private void setPostTitleFromFirestore(String postKey) {
         postContent = findViewById(R.id.postContent);
 
-
-
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", PostKey)
+                .whereEqualTo("Post_Key", postKey)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -360,7 +358,7 @@ public class PostActivity extends AppCompatActivity {
                 });
 
         firestore.collection("Post")
-                .whereEqualTo("Post_Key", PostKey)
+                .whereEqualTo("Post_Key", postKey)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -372,6 +370,7 @@ public class PostActivity extends AppCompatActivity {
                     Log.d("TAG", "Error getting documents", e);
                 });
     }
+
 
 
 

@@ -163,10 +163,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Fetch profile data and update UI
-    private void fetchProfileDataAndUpdateUI(String write_UID, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
-        if (write_UID != null) {
+    private void fetchProfileDataAndUpdateUI(String postKey, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
+        String writerUser = querySnapshot.getDocuments().get(postIndex).getString("Writer_User");
+        if (writerUser != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocumentReference profileRef = db.collection("Profile").document(write_UID);
+            DocumentReference profileRef = db.collection("Profile").document(writerUser);
 
             profileRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -175,12 +176,10 @@ public class MainActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document != null && document.exists()) {
                             String profileImageUrl = document.getString("profileImageUrl");
-
                             String name = document.getString("name");
 
                             String contentImageUrl = querySnapshot.getDocuments().get(postIndex).getString("URL(1)");
                             String title = querySnapshot.getDocuments().get(postIndex).getString("title");
-                            String postKey = querySnapshot.getDocuments().get(postIndex).getId();
 
                             LinearLayout columnLayout = createColumnLayout(postKey, profileImageUrl, name, contentImageUrl, title);
                             rowLayout.addView(columnLayout);
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Log.d(TAG, "Writer UID is null");
+            Log.d(TAG, "Writer User ID is null");
         }
     }
 
@@ -238,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 게시물을 클릭했을 때 PostActivity로 postKey 전달
                 Intent intent = new Intent(MainActivity.this, PostActivity.class);
-                intent.putExtra("POST_KEY", postKey);
+                intent.putExtra("Post_Key", postKey);
                 startActivity(intent);
             }
         });
