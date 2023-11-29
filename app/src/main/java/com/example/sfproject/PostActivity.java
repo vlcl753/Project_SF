@@ -88,6 +88,9 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+
+
+        /*
         String postKey = getIntent().getStringExtra("Post_Key");
 
         Intent intent = getIntent();
@@ -95,6 +98,26 @@ public class PostActivity extends AppCompatActivity {
             int imageNumber = intent.getIntExtra("IMAGE_NUMBER", -1);
             PostKey = "Post_" + imageNumber;
             System.out.println("받아버렸다" + imageNumber);
+        }
+
+         */
+
+
+        Intent intent = getIntent();
+        PostKey = getIntent().getStringExtra("Post_Key");
+
+        if (intent != null) {
+            int imageNumber = intent.getIntExtra("IMAGE_NUMBER", -1);
+            PostKey = getIntent().getStringExtra("Post_Key"); // 기존에 선언된 클래스 변수를 사용
+            System.out.println("받아버렸다" + imageNumber);
+        }
+        if (PostKey != null) {
+            // postKey가 존재하는 경우, 이를 이용하여 원하는 작업 수행
+            // 예: 해당 postKey를 사용하여 데이터베이스에서 해당 게시물의 정보를 가져오거나 다른 작업 수행
+            Log.d("PostActivity", "Received Post_Key: " + PostKey);
+        } else {
+            // postKey가 존재하지 않는 경우, 에러 처리 또는 다른 작업 수행
+            Log.d("PostActivity", "No Post_Key received");
         }
 
         LinearLayout postLinearLayout = findViewById(R.id.post_LL);
