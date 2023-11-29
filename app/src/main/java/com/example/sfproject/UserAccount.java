@@ -7,8 +7,8 @@ public class UserAccount {
     private String name;
     private String profileImageUrl; // 프로필 이미지 URL 추가
 
-    private int flower;
-    private int flowing;
+    private int following;
+    private int follow;
 
     private int report;
     public UserAccount() {
@@ -66,15 +66,15 @@ public class UserAccount {
     }
 
 
-    public int getFlower(){return flower;}
+    public int getFollowing(){return following;}
 
-    public void setFlower(int flower){} {
-        this.flower = flower;
+    public void setFollowing(int following){} {
+        this.following = following;
     }
-    public int getFlowing(){return flowing;}
+    public int getFollow(){return follow;}
 
-    public void setFlowing(int flowing){} {
-        this.flowing = flowing;
+    public void setFollow(int follow){} {
+        this.follow = follow;
     }
 }
 

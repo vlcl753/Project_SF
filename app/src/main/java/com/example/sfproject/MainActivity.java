@@ -1,5 +1,6 @@
 package com.example.sfproject;
 
+
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
@@ -47,15 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     ViewFlipper v_fllipper;
     LinearLayout parentLayout;
-    public void openProfileTwoActivity(View view) {
-        Intent intent = new Intent(this, PostActivityTwo.class);
-        startActivity(intent);
-    }
-    public void goToPostActivity(View view
-    ) {
-        Intent intent = new Intent(this, PostActivity.class);
-        startActivity(intent);
-    }
+
     private BottomNavigationView bottomNavigationView;
 
     public void goToSearchActivity(View view) {
@@ -177,12 +170,23 @@ public class MainActivity extends AppCompatActivity {
                         if (document != null && document.exists()) {
                             String profileImageUrl = document.getString("profileImageUrl");
                             String name = document.getString("name");
-
                             String contentImageUrl = querySnapshot.getDocuments().get(postIndex).getString("URL(1)");
                             String title = querySnapshot.getDocuments().get(postIndex).getString("title");
+                            String fetchedPostKey = querySnapshot.getDocuments().get(postIndex).getString("Post_Key");
 
-                            LinearLayout columnLayout = createColumnLayout(postKey, profileImageUrl, name, contentImageUrl, title);
+                            // fetchedPostKey 값을 createColumnLayout 메서드로 전달
+                            LinearLayout columnLayout = createColumnLayout(fetchedPostKey, profileImageUrl, name, contentImageUrl, title);
                             rowLayout.addView(columnLayout);
+
+                            columnLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 게시물을 클릭했을 때 PostActivity로 postKey 전달
+                                    Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                                    intent.putExtra("Post_Key", fetchedPostKey);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     } else {
                         Log.d(TAG, "Error fetching profile data: ", task.getException());
@@ -193,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Writer User ID is null");
         }
     }
+
 
 
 
