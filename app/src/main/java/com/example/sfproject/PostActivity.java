@@ -57,7 +57,11 @@ public class PostActivity extends AppCompatActivity {
     private String PostKey = null;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
-    private String currentUserId;
+
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String currentUserId = currentUser.getUid();
+
+    //private String currentUserId;
     private FirebaseFirestore firebaseFirestore;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MMdd_HHmm_ssSSS");
     private String formattedDate;
@@ -213,53 +217,59 @@ public class PostActivity extends AppCompatActivity {
                                                 String userUID = document.getString("Writer_User");
                                                 String postKey = document.getString("Post_Key");
 
-                                                String folderPath = "Profile/" + userUID + "/Profile_photo-" + postKey.substring(5) + ".jpg";
+                                                if (currentUser != null) {
+                                                    String currentUserUID = currentUser.getUid();
 
-                                                Log.d("DeleteFile", "현재 파일 위치 " + folderPath);
 
-                                                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
+                                                    String folderPath = "Profile/" + userUID + "/Profile_photo-" + postKey.substring(5) + ".jpg";
 
-                                                // Storage에서 파일 삭제
-                                                storageRef.delete()
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                // 파일 삭제 성공 시 실행할 코드
-                                                                Log.d("DeleteFile", "파일 삭제 성공!");
+                                                    Log.d("DeleteFile", "현재 파일 위치 " + folderPath);
 
-                                                                // 이후에 삭제 작업을 수행합니다.
-                                                                db.collection(collectionPath)
-                                                                        .document(documentIDToDelete)
-                                                                        .delete()
-                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                            @Override
-                                                                            public void onSuccess(Void aVoid) {
-                                                                                // 삭제 성공 시 실행할 코드
-                                                                                Log.d("TAG", "문서 삭제 성공");
-                                                                            }
-                                                                        })
-                                                                        .addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                // 삭제 실패 시 실행할 코드
-                                                                                Log.w("TAG", "문서 삭제 실패", e);
-                                                                            }
-                                                                        });
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                // 파일 삭제 실패 시 실행할 코드
-                                                                Log.e("DeleteFile", "파일 삭제 실패: " + e.getMessage());
-                                                            }
-                                                        });
+                                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
+
+                                                    // Storage에서 파일 삭제
+                                                    storageRef.delete()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    // 파일 삭제 성공 시 실행할 코드
+                                                                    Log.d("DeleteFile", "파일 삭제 성공!");
+
+                                                                    // 이후에 삭제 작업을 수행합니다.
+                                                                    db.collection(collectionPath)
+                                                                            .document(documentIDToDelete)
+                                                                            .delete()
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    // 삭제 성공 시 실행할 코드
+                                                                                    Log.d("TAG", "문서 삭제 성공");
+                                                                                    finish();
+                                                                                }
+                                                                            })
+                                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                                @Override
+                                                                                public void onFailure(@NonNull Exception e) {
+                                                                                    // 삭제 실패 시 실행할 코드
+                                                                                    Log.w("TAG", "문서 삭제 실패", e);
+                                                                                }
+                                                                            });
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    // 파일 삭제 실패 시 실행할 코드
+                                                                    Log.e("DeleteFile", "파일 삭제 실패: " + e.getMessage());
+                                                                }
+                                                            });
+                                                } else {
+                                                    // 해당 documentID를 가진 문서가 존재하지 않음
+                                                    Log.d("TAG", "해당 documentID를 가진 문서가 존재하지 않습니다.");
+                                                }
                                             } else {
-                                                // 해당 documentID를 가진 문서가 존재하지 않음
-                                                Log.d("TAG", "해당 documentID를 가진 문서가 존재하지 않습니다.");
+                                                Log.d("TAG", "get failed with ", task.getException());
                                             }
-                                        } else {
-                                            Log.d("TAG", "get failed with ", task.getException());
                                         }
                                     }
                                 });
