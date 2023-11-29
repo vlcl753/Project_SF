@@ -221,14 +221,14 @@ public class Profile_EditActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> Log.d("Delete", "프로필 문서 삭제 완료"))
                 .addOnFailureListener(e -> Log.e("Delete", "프로필 문서 삭제 실패: " + e.getMessage()));
 
-
         db.collection("Post")
                 .whereEqualTo("Write_UID", userUID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (DocumentSnapshot document : task.getResult()) {
-                            db.collection("Post").document(document.getId())
+                            String postKey = document.getId(); // Post_Key 가져오기
+                            db.collection("Post").document(postKey)
                                     .delete()
                                     .addOnSuccessListener(aVoid -> Log.d("Delete", "포스트 문서 삭제 완료"))
                                     .addOnFailureListener(e -> Log.e("Delete", "포스트 문서 삭제 실패: " + e.getMessage()));
@@ -237,6 +237,7 @@ public class Profile_EditActivity extends AppCompatActivity {
                         Log.e("Delete", "Error getting documents: ", task.getException());
                     }
                 });
+
         db.collection("comments")
                 .whereEqualTo("uid", userUID)
                 .get()
@@ -271,12 +272,12 @@ public class Profile_EditActivity extends AppCompatActivity {
                                 });
                     }
 
-
                 })
                 .addOnFailureListener(e -> {
 
                     Log.e("ListFiles", "파일 목록 가져오기 실패: " + e.getMessage());
                 });
+
 
     }
 

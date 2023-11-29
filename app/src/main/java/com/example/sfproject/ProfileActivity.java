@@ -242,12 +242,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         LinearLayout parentLayout = new LinearLayout(this);
         LinearLayout.LayoutParams parentLayoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT); // 이 부분을 MATCH_PARENT에서 WRAP_CONTENT로 변경합니다.
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         parentLayout.setLayoutParams(parentLayoutParams);
         parentLayout.setOrientation(LinearLayout.VERTICAL);
         parentLayout.setGravity(Gravity.CENTER);
 
-        int numRows = (int) Math.ceil((double) imagePaths.size() / NUM_COLUMNS); // 행의 수 계산
+        int numRows = (int) Math.ceil((double) imagePaths.size() / NUM_COLUMNS);
 
         for (int row = 0; row < numRows; row++) {
             LinearLayout rowLayout = new LinearLayout(this);
@@ -344,7 +344,6 @@ public class ProfileActivity extends AppCompatActivity {
         params.gravity = Gravity.CENTER;
         imageView.setLayoutParams(params);
 
-        // Firebase Storage에서 이미지 로드
         loadFirebaseImage(imageView, imagePath);
 
         imageView.setClickable(true);

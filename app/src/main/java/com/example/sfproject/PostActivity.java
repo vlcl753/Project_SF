@@ -3,6 +3,7 @@ package com.example.sfproject;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,16 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -45,7 +50,7 @@ import java.util.TimeZone;
 
 public class PostActivity extends AppCompatActivity {
 
-    private ImageView postPic, postPic2, postPic3, imgProfile;
+    private ImageView postPic, postPic2, postPic3, imgProfile, menudots;
     private TextView txtPostContent, txtPostDate, txtPostTitle, txtPostName, postContent;
     private EditText editTextComment;
     private Button btnAddComment;
@@ -69,6 +74,15 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+
+        ImageView menudots = findViewById(R.id.menudots);
+        menudots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
 
         String postKey = getIntent().getStringExtra("Post_Key");
 
@@ -173,6 +187,95 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알림창")
+                .setMessage("게시물을 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        String collectionPath = "Post"; // Post 컬렉션 안에서 삭제할 것인지 지정합니다.
+                        String documentIDToDelete = documentID; // 삭제할 문서의 아이디를 여기에 입력하세요
+
+                        // 해당 documentID가 존재하는지 확인하고, 있다면 삭제합니다.
+                        db.collection(collectionPath)
+                                .document(documentIDToDelete)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                // 해당 documentID를 가진 문서가 존재하면 Writer_User 값을 가져와서 User_UID에 저장합니다.
+                                                String userUID = document.getString("Writer_User");
+                                                String postKey = document.getString("Post_Key");
+
+                                                String folderPath = "Profile/" + userUID + "/Profile_photo-" + postKey.substring(5) + ".jpg";
+
+                                                Log.d("DeleteFile", "현재 파일 위치 " + folderPath);
+
+                                                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
+
+                                                // Storage에서 파일 삭제
+                                                storageRef.delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                // 파일 삭제 성공 시 실행할 코드
+                                                                Log.d("DeleteFile", "파일 삭제 성공!");
+
+                                                                // 이후에 삭제 작업을 수행합니다.
+                                                                db.collection(collectionPath)
+                                                                        .document(documentIDToDelete)
+                                                                        .delete()
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                // 삭제 성공 시 실행할 코드
+                                                                                Log.d("TAG", "문서 삭제 성공");
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                // 삭제 실패 시 실행할 코드
+                                                                                Log.w("TAG", "문서 삭제 실패", e);
+                                                                            }
+                                                                        });
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                // 파일 삭제 실패 시 실행할 코드
+                                                                Log.e("DeleteFile", "파일 삭제 실패: " + e.getMessage());
+                                                            }
+                                                        });
+                                            } else {
+                                                // 해당 documentID를 가진 문서가 존재하지 않음
+                                                Log.d("TAG", "해당 documentID를 가진 문서가 존재하지 않습니다.");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+                    }
+
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 취소 버튼을 눌렀을 때 수행할 작업 추가
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
 
     private void addCommentToFirestore() {
         String commentContent = editTextComment.getText().toString().trim();
