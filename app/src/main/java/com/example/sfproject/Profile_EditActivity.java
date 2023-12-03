@@ -177,25 +177,23 @@ public class Profile_EditActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                deleteProfileAndPosts(User_UID);
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null) {
+                    currentUser.delete()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d("DeleteUser", "사용자 삭제 성공!");
+                                    deleteProfileAndPosts(User_UID); // 사용자가 삭제된 후에 프로필과 포스트 삭제
 
-                Log.d("DeleteUser", "여기까지!");
-                System.out.println("여기까지");
-
-                FirebaseAuth.getInstance().signOut();
-
-                currentUser.delete()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Log.d("DeleteUser", "사용자 삭제 성공!");
-                            } else {
-                                Log.e("DeleteUser", "사용자 삭제 실패: " + task.getException().getMessage());
-                            }
-                        });
-
-                Intent intent = new Intent(Profile_EditActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                                    Intent intent = new Intent(Profile_EditActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Log.e("DeleteUser", "사용자 삭제 실패: " + task.getException().getMessage());
+                                }
+                            });
+                }
             }
         });
 
