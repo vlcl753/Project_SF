@@ -151,23 +151,14 @@ public class MainActivity extends AppCompatActivity {
             if (i + 1 < querySnapshot.size()) {
                 String writeUID = querySnapshot.getDocuments().get(i + 1).getString("Writer_User");
                 fetchProfileDataAndUpdateUI(writeUID, i + 1, querySnapshot, rowLayout);
+            } else if (i + 1 == querySnapshot.size() && isLastSingle) {
+                LinearLayout emptyColumnLayout = createEmptyColumnLayout();
+                rowLayout.addView(emptyColumnLayout);
             }
 
             mainPostsLayout.addView(rowLayout);
         }
-
-        // Add the last post if it's single (odd number of posts)
-        if (isLastSingle) {
-            LinearLayout lastRowLayout = createRowLayout();
-            String writeUID = querySnapshot.getDocuments().get(numOfPosts - 1).getString("Writer_User");
-            fetchProfileDataAndUpdateUI(writeUID, numOfPosts - 1, querySnapshot, lastRowLayout);
-
-            mainPostsLayout.addView(lastRowLayout);
-        }
     }
-
-
-
 
     // Fetch profile data and update UI
     private void fetchProfileDataAndUpdateUI(String postKey, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
