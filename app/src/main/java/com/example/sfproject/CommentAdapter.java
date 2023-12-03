@@ -1,6 +1,9 @@
 package com.example.sfproject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +82,65 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             tvCommentText = itemView.findViewById(R.id.comment_content);
             tvTimestamp = itemView.findViewById(R.id.comment_date);
             ivProfile = itemView.findViewById(R.id.comment_user_img);
+
+            // 댓글을 롱클릭했을 때 호출될 메서드를 정의
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    // 롱클릭 이벤트 처리
+                    showDeleteCommentDialog(commentList.get(getBindingAdapterPosition())); // 변경된 부분
+                    return true; // 이벤트 소비 여부 반환
+                }
+            });
+        }
+
+        // 댓글 삭제 다이얼로그를 표시하는 메서드
+        private void showDeleteCommentDialog(Comment comment) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+            builder.setTitle("댓글 삭제")
+                    .setMessage("이 댓글을 삭제하시겠습니까?")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 댓글 삭제 로직을 여기에 추가
+                            deleteComment(comment);
+                        }
+                    })
+                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+
+        // 댓글 삭제 로직을 처리하는 메서드
+        private void deleteComment(Comment comment) {
+            // 여기에 실제 댓글 삭제 로직을 추가해야 합니다.
+            // 아래는 예시로 Firebase를 사용하는 경우의 코드입니다. 실제로 사용 중인 데이터베이스에 맞게 수정이 필요합니다.
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            String commentId = commentList.get(getBindingAdapterPosition()).getCommentId();
+            firestore.collection("comments")
+                    .document(commentId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        // 삭제 성공 시
+                        Log.d("CommentAdapter", "댓글 삭제 성공");
+
+                        // 시간 지연 후 UI 업데이트 및 RecyclerView 갱신
+                        new Handler().postDelayed(() -> {
+                            // UI 업데이트 등의 작업을 여기에서 수행하면 됩니다.
+                            // commentList에서 삭제한 댓글을 제거
+                            commentList.remove(getBindingAdapterPosition());
+                            // RecyclerView 갱신
+                            notifyItemRemoved(getBindingAdapterPosition());
+                        }, 1000); // 1초 후에 UI 업데이트 진행
+                    })
+                    .addOnFailureListener(e -> {
+                        // 삭제 실패 시
+                        Log.e("CommentAdapter", "댓글 삭제 실패: " + e.getMessage());
+                    });
         }
     }
 

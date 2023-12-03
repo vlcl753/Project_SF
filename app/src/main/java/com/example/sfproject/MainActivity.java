@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -52,8 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     public void goToSearchActivity(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
+        FirebaseAuth.getInstance().signOut();
+        // 로그아웃 후 원하는 화면으로 이동하도록 구현할 수 있습니다.
+        Intent intent = new Intent(this, LoginActivity.class); // 로그인 화면으로 이동하도록 설정 (원하는 화면으로 변경 가능)
         startActivity(intent);
+        finish();
+
     }
 
     @Override
@@ -146,14 +151,23 @@ public class MainActivity extends AppCompatActivity {
             if (i + 1 < querySnapshot.size()) {
                 String writeUID = querySnapshot.getDocuments().get(i + 1).getString("Writer_User");
                 fetchProfileDataAndUpdateUI(writeUID, i + 1, querySnapshot, rowLayout);
-            } else if (i + 1 == querySnapshot.size() && isLastSingle) {
-                LinearLayout emptyColumnLayout = createEmptyColumnLayout();
-                rowLayout.addView(emptyColumnLayout);
             }
 
             mainPostsLayout.addView(rowLayout);
         }
+
+        // Add the last post if it's single (odd number of posts)
+        if (isLastSingle) {
+            LinearLayout lastRowLayout = createRowLayout();
+            String writeUID = querySnapshot.getDocuments().get(numOfPosts - 1).getString("Writer_User");
+            fetchProfileDataAndUpdateUI(writeUID, numOfPosts - 1, querySnapshot, lastRowLayout);
+
+            mainPostsLayout.addView(lastRowLayout);
+        }
     }
+
+
+
 
     // Fetch profile data and update UI
     private void fetchProfileDataAndUpdateUI(String postKey, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
@@ -183,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(View v) {
                                     // 게시물을 클릭했을 때 PostActivity로 postKey 전달
                                     Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                                    Log.e("ImageLoad", "이미지 패치: " + fetchedPostKey);
                                     intent.putExtra("Post_Key", fetchedPostKey);
                                     startActivity(intent);
                                 }

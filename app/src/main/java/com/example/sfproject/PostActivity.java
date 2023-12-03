@@ -90,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-        /*
+
         String postKey = getIntent().getStringExtra("Post_Key");
 
         Intent intent = getIntent();
@@ -99,11 +99,18 @@ public class PostActivity extends AppCompatActivity {
             PostKey = "Post_" + imageNumber;
             System.out.println("받아버렸다" + imageNumber);
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> 09b8c6ad375a0ba140ab273b4c389b2c0bdb64fd
          */
+>>>>>>> 0cc6818d944cf80af17dfeec5ebcf671da4e3d1b
 
 
-        Intent intent = getIntent();
+
+        //Intent intent = getIntent();
         PostKey = getIntent().getStringExtra("Post_Key");
 
         if (intent != null) {
@@ -334,7 +341,7 @@ public class PostActivity extends AppCompatActivity {
                                         })
                                         .addOnFailureListener(e -> {
                                             // 댓글 추가 실패 시 처리
-                                            // 실패 처리를 원하는대로 구현
+                                            Log.e("CommentAdapter", "댓글 추가 실패: " + e.getMessage());
                                         });
                             }
                         } else {
@@ -418,23 +425,28 @@ public class PostActivity extends AppCompatActivity {
     private void displayCommentsForPost(String postKey) {
         firestore.collection("comments")
                 .whereEqualTo("postKey", postKey)
-                .orderBy("timestamp", Query.Direction.DESCENDING) // timestamp 필드를 기준으로 내림차순 정렬
-                // .orderBy("timestamp", Query.Direction.DESCENDING) = 최신 댓글 위에
-                // .orderBy("timestamp", Query.Direction.ASCENDING) = 최신 댓글 아래
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        Log.w("CommentData", "Listen failed.", e);
+                        Log.w("CommentData", "리스너 호출 실패.", e);
                         return;
                     }
 
-                    List<Comment> comments = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Comment comment = document.toObject(Comment.class);
-                        comments.add(comment);
-                    }
+                    if (queryDocumentSnapshots != null) {
+                        List<Comment> comments = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Comment comment = document.toObject(Comment.class);
+                            comments.add(comment);
+                        }
 
-                    // setCommentList 메서드 호출
-                    commentAdapter.setCommentList(comments);
+                        // 검색된 댓글 수를 로그로 출력
+                        Log.d("CommentData", "댓글 수: " + comments.size());
+
+                        // setCommentList 메서드 호출
+                        commentAdapter.setCommentList(comments);
+                    } else {
+                        Log.d("CommentData", "댓글을 찾을 수 없음.");
+                    }
                 });
     }
 
