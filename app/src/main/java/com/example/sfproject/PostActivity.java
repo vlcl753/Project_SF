@@ -90,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-
+/*
         String postKey = getIntent().getStringExtra("Post_Key");
 
         Intent intent = getIntent();
@@ -99,14 +99,7 @@ public class PostActivity extends AppCompatActivity {
             PostKey = "Post_" + imageNumber;
             System.out.println("받아버렸다" + imageNumber);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> 09b8c6ad375a0ba140ab273b4c389b2c0bdb64fd
-         */
->>>>>>> 0cc6818d944cf80af17dfeec5ebcf671da4e3d1b
+*/
 
 
 
