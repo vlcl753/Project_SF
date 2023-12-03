@@ -103,7 +103,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-        //Intent intent = getIntent();
+        Intent intent = getIntent();
         PostKey = getIntent().getStringExtra("Post_Key");
 
         if (intent != null) {
