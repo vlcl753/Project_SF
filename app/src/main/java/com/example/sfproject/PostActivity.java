@@ -109,7 +109,7 @@ public class PostActivity extends AppCompatActivity {
         if (intent != null) {
             int imageNumber = intent.getIntExtra("IMAGE_NUMBER", -1);
             PostKey = getIntent().getStringExtra("Post_Key"); // 기존에 선언된 클래스 변수를 사용
-            System.out.println("받아버렸다" + imageNumber);
+            
         }
         if (PostKey != null) {
             // postKey가 존재하는 경우, 이를 이용하여 원하는 작업 수행
