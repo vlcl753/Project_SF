@@ -1,9 +1,11 @@
 package com.example.sfproject;
 
 import com.google.firebase.Timestamp;
+import java.util.UUID;
 
 public class Comment {
 
+    private String commentId;
     private String content, uid, uimg, uname, postKey;
     private Timestamp timestamp;
 
@@ -11,16 +13,24 @@ public class Comment {
     public Comment() {
     }
 
-    // 생성자
+    // 수정된 생성자
     public Comment(String content, String uid, String uimg, String uname, String postKey) {
+        this.commentId = UUID.randomUUID().toString(); // 고유 ID 생성
         this.content = content;
         this.uid = uid;
         this.uimg = uimg;
         this.uname = uname;
         this.postKey = postKey;
-        this.timestamp = Timestamp.now(); // Firestore에서 제공하는 Timestamp 사용
+        this.timestamp = Timestamp.now();
     }
 
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
     public String getContent() {
         return content;
     }
