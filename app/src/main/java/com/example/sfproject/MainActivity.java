@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(View v) {
                                     // 게시물을 클릭했을 때 PostActivity로 postKey 전달
                                     Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                                    Log.e("ImageLoad", "이미지 패치: " + fetchedPostKey);
                                     intent.putExtra("Post_Key", fetchedPostKey);
                                     startActivity(intent);
                                 }

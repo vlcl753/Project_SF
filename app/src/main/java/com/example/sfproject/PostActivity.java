@@ -99,7 +99,6 @@ public class PostActivity extends AppCompatActivity {
             PostKey = "Post_" + imageNumber;
             System.out.println("받아버렸다" + imageNumber);
         }
-
          */
 
 

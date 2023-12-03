@@ -34,6 +34,9 @@ import com.google.firebase.storage.ListResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -51,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String USER_UID = currentUser.getUid();
 
-    //String USER_UID ="teESJRTiV1Z7wO5eoA7SUkyI5U83";
+    //String USER_UID ="ikZZTQIEEAetiZgPSFumXU1Cv3I3";
 
     private TextView Profile_follow_num;
     private TextView Profile_following_num;
@@ -355,9 +358,19 @@ public class ProfileActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int imageNumber = extractImageNumber(imagePath);
+                Pattern pattern = Pattern.compile("\\d+");
+                Matcher matcher = pattern.matcher(imagePath);
+
+                String imageNumber = "";
+
+                if (matcher.find()) {
+                    String numberStr = matcher.group();
+                    imageNumber = "Post_" + numberStr;
+                }
+
+                Log.e("ImageLoad", "이미지 패치: " + imageNumber);
                 Intent intent = new Intent(ProfileActivity.this, PostActivity.class);
-                intent.putExtra("IMAGE_NUMBER", imageNumber);
+                intent.putExtra("Post_Key", imageNumber);
                 startActivity(intent);
             }
         });
