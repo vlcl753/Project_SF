@@ -78,8 +78,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent.hasExtra("USER_UID")) {
+            profile_editbtn = findViewById(R.id.profile_editbtn);
+
             setUserUid(intent.getStringExtra("USER_UID"));
             Log.e("UserNameLoad", "받아버렸썽: ");
+            profile_editbtn.setVisibility(View.INVISIBLE);
+            //profile_editbtn.setEnabled(false);
         }
 
         bottomNavigationView = findViewById(R.id.bottom_navigationview);
