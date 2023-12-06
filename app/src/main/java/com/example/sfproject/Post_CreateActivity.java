@@ -155,7 +155,7 @@ public class Post_CreateActivity extends AppCompatActivity {
 
                 profileRef.listAll()
                         .addOnSuccessListener(listResult -> {
-                            int maxPhotoNum = -1;
+                            int maxPhotoNum = 1;
 
                             for (StorageReference item : listResult.getItems()) {
                                 String itemName = item.getName();
