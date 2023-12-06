@@ -53,6 +53,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String USER_UID = currentUser.getUid();
+    // Getter method
+
+    public String getUserUid() {
+        return USER_UID;
+    }
+
+    // Setter method
+    public void setUserUid(String userUid) {
+        USER_UID = userUid;
+    }
+
 
     //String USER_UID ="ikZZTQIEEAetiZgPSFumXU1Cv3I3";
 
@@ -65,32 +76,32 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("USER_UID")) {
+            setUserUid(intent.getStringExtra("USER_UID"));
+            Log.e("UserNameLoad", "받아버렸썽: ");
+        }
+
         bottomNavigationView = findViewById(R.id.bottom_navigationview);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId(); // 아이템 ID를 가져옵니다.
-                // 아이템 ID에 따라 액티비티를 시작합니다.
+                int id = item.getItemId();
                 int itemID = item.getItemId();
                 if (itemID == R.id.home) {
-                    // 홈 아이템을 클릭했을 때 MainActivity로 이동
                     startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                     finish();
                 } else if (itemID == R.id.add) {
-                    // 글쓰기 아이템을 클릭했을 때 Post_CreateActivity로 이동
                     startActivity(new Intent(ProfileActivity.this, Post_CreateActivity.class));
                     finish();
                 } else if (itemID == R.id.setting) {
-                    // 설정 아이템을 클릭했을 때 Profile_EditActivity로 이동
                     startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
                     finish();
                 } else if (itemID == R.id.noti) {
-                    // 알람 아이템을 클릭했을 때 Notification으로 이동
                     startActivity(new Intent(ProfileActivity.this, Notification.class));
                     finish();
                 } else if (itemID == R.id.search) {
-                    // 설정 아이템을 클릭했을 때 Profile_SearchActivity로 이동
                     startActivity(new Intent(ProfileActivity.this, SearchActivity.class));
                     finish();
                 }
@@ -103,7 +114,6 @@ public class ProfileActivity extends AppCompatActivity {
         storageRef = storage.getReference().child("/Profile/" + USER_UID);
 
         firestore = FirebaseFirestore.getInstance();
-        // 데이터 갯수 가져오기
         getTotalItemsCount();
 
 
@@ -115,10 +125,9 @@ public class ProfileActivity extends AppCompatActivity {
                 // 로그아웃 처리
                 FirebaseAuth.getInstance().signOut();
 
-                // 로그인 화면으로 이동 또는 필요한 다른 작업 수행
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
-                finish(); // 현재 액티비티 종료
+                finish();
             }
         });
 
@@ -281,9 +290,9 @@ public class ProfileActivity extends AppCompatActivity {
         for (int number : imageNumbers) {
             imagePaths.add("Profile_photo-" + number + ".jpg");
         }
-
         createCardViews(imagePaths);
     }
+
 
     private void getTotalItemsCount() {
         storageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {

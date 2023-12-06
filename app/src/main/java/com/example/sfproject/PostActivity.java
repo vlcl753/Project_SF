@@ -223,10 +223,8 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        String collectionPath = "Post"; // Post 컬렉션 안에서 삭제할 것인지 지정합니다.
-                        String documentIDToDelete = documentID; // 삭제할 문서의 아이디를 여기에 입력하세요
-
-                        // 해당 documentID가 존재하는지 확인하고, 있다면 삭제합니다.
+                        String collectionPath = "Post";
+                        String documentIDToDelete = documentID;
                         db.collection(collectionPath)
                                 .document(documentIDToDelete)
                                 .get()
@@ -236,8 +234,7 @@ public class PostActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
-                                                // 해당 documentID를 가진 문서가 존재하면 Writer_User 값을 가져와서 User_UID에 저장합니다.
-                                                String userUID = document.getString("Writer_User");
+                                                 String userUID = document.getString("Writer_User");
                                                 String postKey = document.getString("Post_Key");
 
                                                 if (currentUser != null) {
@@ -250,7 +247,6 @@ public class PostActivity extends AppCompatActivity {
 
                                                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath);
 
-                                                    // Storage에서 파일 삭제
                                                     storageRef.delete()
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
@@ -449,6 +445,7 @@ public class PostActivity extends AppCompatActivity {
 
     public void openProfileActivity(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("USER_UID", USER_UID); // USER_UID 값을 Intent에 추가
         startActivity(intent);
     }
 }

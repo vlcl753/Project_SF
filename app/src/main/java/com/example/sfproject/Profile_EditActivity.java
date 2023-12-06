@@ -153,9 +153,9 @@ public class Profile_EditActivity extends AppCompatActivity {
                         profileRef.update("profileImageUrl", uri.toString())
                                 .addOnCompleteListener(this, task -> {
                                     if (task.isSuccessful()) {
-                                        updateNicknameOnly(newNickname); // 닉네임 업데이트
+                                        updateNicknameOnly(newNickname);
                                     } else {
-                                        // Handle failure
+
                                     }
                                 });
                     });
