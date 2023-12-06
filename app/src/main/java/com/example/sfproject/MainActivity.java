@@ -158,7 +158,16 @@ public class MainActivity extends AppCompatActivity {
 
             mainPostsLayout.addView(rowLayout);
         }
+
+        // 마지막 홀수 개의 게시물을 처리하여 UI 업데이트
+        if (isLastSingle) {
+            LinearLayout lastRowLayout = createRowLayout();
+            String writeUID = querySnapshot.getDocuments().get(numOfPosts - 1).getString("Writer_User");
+            fetchProfileDataAndUpdateUI(writeUID, numOfPosts - 1, querySnapshot, lastRowLayout);
+            mainPostsLayout.addView(lastRowLayout);
+        }
     }
+
 
     // Fetch profile data and update UI
     private void fetchProfileDataAndUpdateUI(String postKey, int postIndex, QuerySnapshot querySnapshot, LinearLayout rowLayout) {
